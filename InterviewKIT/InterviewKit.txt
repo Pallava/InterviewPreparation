@@ -1,0 +1,182 @@
+JVM architecture
+--------------------
+1.what is the diffrence between heap and a stack ?
+2.Class Loaders
+3.JVM Architecture
+
+
+OOPS concepts
+---------------------
+1.can we declare constructor as private ?
+2.Can we make constructor as final ?
+3.What is a transient keyword ?
+4.what is the difference between class.forName() and class.forname().newInstance();?
+5.SOLID principles of java? //https://www.educative.io/edpresso/what-are-the-solid-principles-in-java
+6.OOPS concepts (Class, Object,Inheritance ,Abstraction,Encapsulation,Polymorphism,Association ,Aggregation ,Composition)
+7.Can u override private and static methods in java?
+8.what is static initializer block?
+9.where static  block gets stored?
+10.Method overriding concepts
+11.Abstract class vs interface
+12.How to achieve encapsulation
+13.Singleton design pattern
+14.Break singleton
+15.double locking concept in singleton
+16.static keyword ?
+17.can we overload static member in overloading.
+18.try-with-resource
+19.clasnotfound vs Noclassdeffound error
+20.Marker Interfaces -> (Ser,Clonable)
+21.Why java is not completely Object oriented language
+22.Wrapper classess
+
+Exceptions
+---------------------
+1.What happens if exception is thrown from finally block?
+2.In what scenario finally wont be executed?
+3.What happens when u call return statement in try catch ?
+4.Exception hierarchy
+5.Checked exception vs unchecked exception
+6.throw vs throws
+7.Exception Propagation
+
+Serailization (static , HAs a ,IS-A)	
+--------------
+1.What is externalization?
+2.Serilaization v/s Externalization?
+3.purpose of serialversion id?
+
+Garbage collection
+-------------------
+1. what is GC ?
+
+Generics
+-------------
+why generics ?
+what is type erasure
+
+Thread concepts?
+---------------------
+1.how to avoid deadlocks?
+2.ways to create a thread ?
+3.which is best way to create a thread and why ?
+4.difference between start() and run () ?
+5.What is a reentrant lock
+6.Yield vs join
+7.sleep
+8.wait and notify ,notiifyall
+9.countdownlatch vs cyclic barrier
+10.synchronized vs static synchronized
+11.Race condition
+12.Runnable vs callable
+13.what is multithreading
+14.thread.start 2 times what happens
+String
+-----------
+1.Purpose of intern() ?
+2.Substring working
+3.String constant pool
+4.StringBuilder , StringBuffer
+5.Design Immutable class
+
+Collections
+--------------
+1.Difference b/w comparator and comparable
+2.Fail fast vs fail safe
+3.Overriding equals and hashcode in hashmap?
+4.ArrayList and its benifits
+5.HashMap v Hashtable v SynchronizedHashMap v concurrentHashMap
+6.HashMap Working?
+7.Collection vs Collections
+8.ArrayList vs Vector?
+9.List vs Set
+10.HashSet vs TreeSet (Implemented  using,order , Null,Implements , Comparision)
+11.HashMap vs hashtable
+12.HashMap vs TreeMap (order , null ,implements ,comparison, datastructure)
+14.Iterator Vs ListIterator vs Enumerator
+15.How to synhronize Map,ListSet ?
+16.How to make collection readonly >?
+17.Overriding equals and hashcode
+
+
+Java8 
+---------------------------------
+1.what is functional interface ?
+2.What are streams?
+3.Intermediate and Terminal operations in Streams?
+4.what are parallel streams?
+5.java 8 features
+6.List different functional interfacesx
+7.what are method references ?
+8.Java 8 date time api , how is it any better tahn java 7 date api?
+9.findFirst() vs findAny()
+
+Webservices
+------------------
+1.how to secure the rest API?
+2.what is OAUTH?
+3.Rest v SOAP
+
+SpringFramework
+-------------------
+1. what is @Qualifier , @ComponentScan ,@Value , @Autowired ,@Required , @Configuration ,@Bean ,@component,@PathVariable,@RequestParam?
+2.what is @ResponseBody , @RequestBody?
+3.dispatcher Servlet?
+4.What is contextloader listener ?
+5.Autowiring types
+6.Ways to implement the life cycle of a bean?
+7.What is the Life Cycle of a Bean in Spring?
+
+Hibernate
+-------------------
+1.What are advantages of Hibernate?
+2.Session factory
+3.Optimistic lock vs pessimistic lock?
+4.@GeneratedValue ?
+
+Springboot
+------------------
+1.What is the default server in SB?
+2.how to change the server port in SB?
+3.what is @Controller v @Restcontroller?
+4.@SpringBootApplication
+5.what happens when SpringApplication.run() ?
+6.How @EnableAutoconfiguration works ?
+7.how to access properties file in SB ?
+-@Value("${spring.datasource.username}")
+String username;
+-@Autowired
+private Environment env;
+env.getProperty("logging.level.root");
+-@ConfigurationProperties(prefix="spring.demo")
+@Configuration
+
+8.what is profiling ?
+-Spring Boot Profiling provides a way to segregate parts of your application configuration and make it only available in the certain environment
+-Spring Boot Profiling is needed for applications which need’s to load different configurations for different environments Such as QA, DEV OR PROD.
+- Spring Boot allows to specify profile based configuration with application-{profileName}.properties
+in app.properties
+spring.profiles.active=prod
+
+in cmd line we can run -Dspring.profile.active=dev
+DB
+9.what is Springboot?
+10.what is actuator ? how to implement custom actuator
+11.can you disable autoconfiguration ? -@SBAPPl(exclude={DATASOURCEAUTOCONFIGURATION.CLASS}
+12.can we change port of embedded server ?
+13.how to change the default server ?
+14.can we disable the default server ? -spring.main.web-application-type=none;
+15.EnABLE debug logs in SB ? logging.level.root=debug
+16.configuring jpa in spring boot
+-spring.datasource.url=jdbc:postgresql://localhost:5432/test
+spring.datasource.username=postgres
+spring.datasource.password=postgres
+17.what is response entity?
+18.handling exceptions in controoler?
+
+-----------
+1.what is  a view ?
+2.What is an Outer join?
+3.clustered index vs nonclustered index?
+4.select 2nd heighst slaary
+select min(sal) from (select sal from emp order by sal desc) where ronum<33
