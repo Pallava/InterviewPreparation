@@ -1,0 +1,860 @@
+1.SOLID Principles Java |
+------------------------|
+1.Single Responsibility Principle (SRP)
+->The single responsibility principle states that every Java class must perform a single functionality.
+->Implementation of multiple functionalities in a single class mashup the code and if any modification is required may affect the whole class.
+->Student is a class having three methods namely printDetails(), calculatePercentage(), and addStudent(). 
+Hence, the Student class has three responsibilities to print the details of students, 
+calculate percentages, and database. By using the single responsibility principle,
+ we can separate these functionalities into three separate classes to fulfill the goal of the principle.
+2.Open-Closed Principle (OCP)
+->The open-closed principle states that according to new requirements the module should be open for extension but closed for modification
+
+Suppose, VehicleInfo is a class and it has the method vehicleNumber() that returns the vehicle number.
+public class VehicleInfo  
+{  
+public double vehicleNumber(Vehicle vcl)   
+{  
+if (vcl instanceof Car)   
+{  
+return vcl.getNumber();  
+if (vcl instanceof Bike)   
+{  
+return vcl.getNumber();  
+}  
+}  
+If we want to add another subclass named Truck, simply,
+ we add one more if statement that violates the open-closed principle.
+ The only way to add the subclass and achieve the goal of principle by overriding the vehicleNumber() method, as we have shown below.
+VehicleInfo.java
+public class VehicleInfo   
+{  
+public double vehicleNumber()   
+{  
+//functionality   
+}  
+} 
+public class Car extends VehicleInfo   
+{  
+public double vehicleNumber()   
+{  
+return this.getValue();  
+} 
+
+public class Truck extends VehicleInfo   
+{  
+public double vehicleNumber()   
+{  
+return this.getValue();  
+} 
+
+3.Liskov Substitution Principle (LSP):
+->It applies to inheritance in such a way that the derived classes must be completely substitutable for their base classes
+
+-> if class A is a subtype of class B, then we should be able to replace B with A without interrupting the behavior of the program
+
+4.Interface Segregation Principle (ISP)
+->The principle states that the larger interfaces split into smaller ones. Because the implementation classes use only the methods that are required. 
+We should not force the client to use the methods that they do not want to use.
+->The goal of the interface segregation principle is similar to the single responsibility principle
+
+5.Dependency Inversion Principle (DIP)
+->The principle states that we must use abstraction (abstract classes and interfaces) instead of concrete implementations.
+->High-level modules should not depend on the low-level module but both should depend on the abstraction.
+----------------------------------------------------------------------------------------------------------------------------------------
+2.Java Inner Classes
+->it is also possible to nest classes (a class within a class)
+->The purpose of nested classes is to group classes
+->To access the inner class, create an object of the outer class, and then create an object of the inner class:
+
+ OuterClass myOuter = new OuterClass();
+ OuterClass.InnerClass myInner = myOuter.new InnerClass();
+ 
+ -> an inner class can be private or protected
+ ->If you don't want outside objects to access the inner class, declare the class as private
+ class OuterClass {
+  int x = 10;
+
+  private class InnerClass {
+    int y = 5;
+  }
+}
+public class Main {
+  public static void main(String[] args) {
+    OuterClass myOuter = new OuterClass();
+    OuterClass.InnerClass myInner = myOuter.new InnerClass();
+    System.out.println(myInner.y + myOuter.x);
+  }
+  
+  ->An inner class can also be static ,which means that you can access it without creating an object of the outer class:
+  class OuterClass {
+  int x = 10;
+
+  static class InnerClass {
+    int y = 5;
+  }
+}
+
+public class Main {
+  public static void main(String[] args) {
+    OuterClass.InnerClass myInner = new OuterClass.InnerClass();
+    System.out.println(myInner.y);
+  }
+}
+-> a static inner class does not have access to members of the outer class.
+-> One advantage of inner classes, is that they can access attributes and methods of the outer class:
+-------------------------------------------------------------------------------------------
+3.How many types of nested classes are there in java?
+a) Static Nested Classes
+
+->nested class is declared as static, then that nested class is called as static nested class.
+->Static nested classes can contain both static and non-static members.
+->We can access only static members of outer class inside a static nested class. We can’t access non-static members of outer class inside a static nested class.
+->static nested classes can be abstract.
+->Static nested class can be final.
+->Constructors and methods of nested classes can be overloaded.
+
+->nested class is declared as static, then that nested class is called as static nested class.
+class OuterClass
+{
+    int i;       //Field as a member
+ 
+    void methodOne()
+    {
+        //method as a member
+    }
+ 
+    static class NestedClass
+    {
+        //class as a member which is declared as static
+    }
+}
+->Static nested classes can contain both static and non-static members.
+class OuterClass
+{
+    //Some members of OuterClass
+ 
+    static class NestedClass
+    {
+        static int i;    //Static Field
+ 
+        int j;      //Non-static Field
+ 
+        void methodOne()
+        {
+            //Non-static method
+        }
+ 
+        static void methodTwo()
+        {
+            //Static Method
+        }
+    }
+}
+->We can access only static members of outer class inside a static nested class. We can’t access non-static members of outer class inside a static nested class.
+class OuterClass
+{
+    static int i;  //static field of OuterClass
+    int j;         //Non-static field of OuterClass
+ 
+    void methodOne()
+    {
+        //Non-static method of OuterClass
+    }
+ 
+    static void methodTwo()
+    {
+        //static method of OuterClass
+    }
+ 
+    static class NestedClass
+    {
+        void methodOfInnerClass()
+        {
+            System.out.println(i);    //static field can be accessed
+ 
+            System.out.println(j);    //This gives Compile time error
+ 
+            //can't access non-static field
+ 
+            methodTwo();   //can access static method
+ 
+            methodOne();   //This gives Compile time error
+ 
+            //can't access non-static method
+        }
+    }
+}
+->static nested classes can be abstract.
+class OuterClass
+{
+    //static and abstract inner class
+ 
+    abstract static class NestedClass
+    {
+        abstract void methodOne();  //abstract method of NestedClass
+ 
+        void methodTwo()
+        {
+            //concrete method of NestedClass
+        }
+    }
+}
+->Static nested class can be final.
+class OuterClass
+{
+    //final and static nested class
+ 
+    final static class NestedClass
+    {
+        void methodOne()
+        {
+            //concrete method of NestedClass
+        }
+    }
+}
+->Constructors and methods of nested classes can be overloaded.
+class OuterClass
+{
+    static class NestedClass
+    {
+        NestedClass()
+        {
+            //First constructor
+        }
+ 
+        NestedClass(int i)
+        {
+            //Second Constructor
+        }
+ 
+        NestedClass(int i, int j)
+        {
+            //Third Constructor
+        }
+ 
+        void methodOne()
+        {
+            //Overloaded method
+        }
+ 
+        void methodOne(int i)
+        {
+            //Overloaded method
+        }
+ 
+        void methodOne(int i, int j)
+        {
+            //Overloaded method
+        }
+    }
+}
+
+b) Non-static Nested Classes OR Inner Classes
+-> nested classes which can be accessed only though instantiating it’s outer class are called non-static nested classes
+Non-static nested classes can be of 3 type,
+
+a) Member Inner Classes
+->You can declare a static field inside a member inner class if the field is final,
+->Member inner classes can be abstract or can be final but not both.
+->Member inner class may contain any number of IIB’s but should not contain any SIB’s.
+->And such field must be initialized at the time of declaration only. Remember, this rule is only for the fields not for the methods.
+->We can access both static and non-static members of outer class inside a member inner class.
+->All members of outer class are accessible inside member inner class and all members of member inner class are accessible inside the outer class irrespective of their visibility.
+->Member Inner Classes are non-static nested classes which are declared as non-static members of outer class.
+->Member inner classes must contain only non-static members. Static members are not allowed inside member inner classes.
+class OuterClass
+{
+    //Member Inner Class : Class As a Non-Static Member
+    class InnerClass
+    {
+        int i;    //can contain non-static field
+ 
+        static int j = 10;    //It gives compile time error
+ 
+        //Should not contain static field
+ 
+        void methodOne()
+        {
+            //can have non-static method
+        }
+ 
+        static void methodTwo()
+        {
+            //Compile time error
+            //should not contain static method
+        }
+    }
+}
+->You can declare a static field inside a member inner class if the field is final,
+-> And such field must be initialized at the time of declaration only. Remember, this rule is only for the fields not for the methods.
+class OuterClass
+{
+    class InnerClass
+    {
+        int i;    //can contain non-static field
+ 
+        static final int j = 10;   //can contain static and final field
+ 
+        //it must be initialized at the time of declaration.
+    }
+}
+->Member inner class may contain any number of IIB’s but should not contain any SIB’s.
+class OuterClass
+{
+    class InnerClass
+    {
+        int i;
+ 
+        {
+            System.out.println("First IIB");
+        }
+ 
+        {
+            System.out.println("Second IIB");
+        }
+ 
+        static
+        {
+            //compile time error
+            //Member Inner Class should not contain SIB
+        }
+    }
+}
+->We can access both static and non-static members of outer class inside a member inner class.
+class OuterClass
+{
+    int i;     //Non-static field of OuterClass
+ 
+    static int j;    //Static field of OuterClass
+ 
+    void methodOne()
+    {
+        System.out.println("Non-Static Method Of OuterClass");
+    }
+ 
+    static void methodTwo()
+    {
+        System.out.println("Static Method Of OuterClass");
+    }
+ 
+    class InnerClass
+    {
+        void methodOfInnerClass()
+        {
+            System.out.println(i); //can use non-static field of OuterClass
+ 
+            System.out.println(j);   //can use static field of OuterClass
+ 
+            methodOne();    //can call non-static method of OuterClass
+ 
+            methodTwo();    //can call static method of OuterClass
+        }
+    }
+}
+->All members of outer class are accessible inside member inner class and all members of member inner class are accessible inside the outer class irrespective of their visibility.
+class OuterClass
+{
+    private int i;   //private field of OuterClass
+ 
+    int j;           //Default field of OuterClass
+ 
+    protected int k; //protected field of OuterClass
+ 
+    public int m;    //public field of OuterClass
+ 
+    void methodOfOuterClass()
+    {
+        InnerClass inner = new InnerClass(); //creating instance of InnerClass
+ 
+        System.out.println(inner.a);  //accessing private field of InnerClass
+ 
+        System.out.println(inner.b);  //accessing default field of InnerClass
+ 
+        System.out.println(inner.c);  //accessing protected field of InnerClass
+ 
+        System.out.println(inner.d);  //accessing public field of InnerClass
+    }
+ 
+    class InnerClass
+    {
+        private int a;    //private field of InnerClass
+ 
+        int b;            //Default field of InnerClass
+ 
+        protected int c;  //protected field of InnerClass
+ 
+        public int d;     //public field of InnerClass
+ 
+        void methodOfInnerClass()
+        {
+            OuterClass outer = new OuterClass(); //creating an instance of OuterClass
+ 
+            System.out.println(outer.i);    //accessing private field of OuterClass
+ 
+            System.out.println(outer.j);    //accessing default field of OuterClass
+ 
+            System.out.println(outer.k);    //accessing protected field of OuterClass
+ 
+            System.out.println(outer.m);    //accessing public field of OuterClass
+        }
+    }
+}
+
+->Member inner classes can be abstract or can be final but not both.
+class OuterClass
+{
+    abstract class InnerClassOne
+    {
+        //abstract Inner Class
+    }
+ 
+    final class InnerClassTwo
+    {
+        //final inner class
+    }
+}
+
+
+b) Local Inner Classes
+->Local inner class in java is non-static nested class which is declared inside a method or a block.
+->Local inner classes must be defined inside a method or a block.
+->Local Inner Classes can’t be static. Because, local inner classes are nothing but local variables and local variables can’t be static.
+->Local inner classes can’t have static members. Only non-static members are allowed inside local inner classes. But local inner classes can contain static and final field.
+->Local inner classes can be abstract or can be final but not both.
+->Only final local variables of methods or blocks containing local inner class can be used inside local inner class.
+->Local inner classes are local to a method or a block in which they are defined. i.e you can’t use local inner classes outside the method or block in which they are defined.
+->To access members of local inner class, you must create an instance of it.
+
+
+->Local inner classes must be defined inside a method or a block.
+class OuterClass
+{
+    static
+    {
+        class LocalInnerClassOne
+        {
+            //Class defined inside Static Initialization Block
+        }
+    }
+ 
+    {
+        class LocalInnerClassTwo
+        {
+            //Class defined inside Instance Initialization Block
+        }
+    }
+ 
+    void methodOne()
+    {
+        class LocalInnerClassThree
+        {
+            //Class defined inside a non-static method
+        }
+    }
+ 
+    static void methodTwo()
+    {
+        class LocalInnerClassFour
+        {
+            //Class defined inside a static method
+        }
+    }
+ 
+    void methodThree()
+    {
+        if(true)
+        {
+            class LocalInnerClassFive
+            {
+                //Class defined inside if-statement
+            }
+        }
+ 
+        for(int i=0; i<=5; i++)
+        {
+            class LocalInnerClassSix
+            {
+                //Class defined inside a for loop
+            }
+        }
+    }
+}
+->Local Inner Classes can’t be static. Because, local inner classes are nothing but local variables and local variables can’t be static.
+class OuterClass
+{
+    void methodOne()
+    {
+        static class LocalInnerClass
+        {
+            //compile time error
+            //Local Inner class can't be static
+        }
+    }
+}
+->Local inner classes can’t have static members. Only non-static members are allowed inside local inner classes. But local inner classes can contain static and final field.
+class OuterClass
+{
+    void methodOne()
+    {
+        class LocalInnerClass
+        {
+            int i;     //can contain Non-static field
+ 
+            static final int j = 10; //can contain static and final field
+ 
+            static int k;   //Compile time error : can't have static field
+ 
+            {
+                //can contain instance initializer
+            }
+ 
+            static
+            {
+                //can't have static initializer
+            }
+ 
+            void methodOne()
+            {
+                //can contain non-static method
+            }
+ 
+            static void methodTwo()
+            {
+                //compile time error : can't have static method
+            }
+        }
+    }
+}
+->To access members of local inner class, you must create an instance of it.
+class OuterClass
+{
+    void methodOne()
+    {
+        class LocalInnerClass
+        {
+            int i;     //Non-static field
+ 
+            static final int j = 10; //static and final field
+ 
+            void methodOne()
+            {
+                System.out.println("From LocalInnerClass");
+            }
+        }
+ 
+        System.out.println(LocalInnerClass.j);  //static and final field can be accessed directly through class name
+ 
+        LocalInnerClass inner = new LocalInnerClass();  //Creatin an object to LocalInnerClass
+ 
+        System.out.println(inner.i);     //accessing non-static field through object reference
+ 
+        inner.methodOne();   //calling non-static method through object reference
+    }
+}
+ 
+public class InnerClasses
+{
+    public static void main(String args[])
+    {
+        OuterClass outer = new OuterClass();
+        outer.methodOne();
+    }
+}
+->Local inner classes are local to a method or a block in which they are defined. i.e you can’t use local inner classes outside the method or block in which they are defined.
+
+class OuterClass
+{
+    void methodOne()
+    {
+        class LocalInnerClass
+        {
+            int i;     //Non-static field
+ 
+            static final int j = 10; //static and final field
+ 
+            void methodOne()
+            {
+                System.out.println("From LocalInnerClass");
+            }
+        }
+ 
+        LocalInnerClass inner = new LocalInnerClass();  
+ 
+        //can use LocalInnerClass within the method in which it is defined
+    }
+ 
+    void methodTwo()
+    {
+        LocalInnerClass inner = new LocalInnerClass();  //compile time error
+ 
+        //can't use LocalInnerClass outside the methodOne().
+    }
+}
+->Only final local variables of methods or blocks containing local inner class can be used inside local inner class.
+class OuterClass
+{
+    void methodOne()
+    {
+        int i;    //Non-final local variable
+ 
+        final int j;   //final local variable
+ 
+        class LocalInnerClass
+        {
+            void methodOne()
+            {
+                System.out.println(i);  //compile time error
+ 
+                //can't use non-final local variable
+ 
+                System.out.println(j);  //can use final local variable
+            }
+        }
+    }
+}
+->Local inner classes can not be declared with access modifiers. i.e Local inner classes can not be private, protected and public. But they can have private, public, protected and default members in them.
+class OuterClass
+{
+    void methodOne()
+    {
+        private class LocalInnerClassOne
+        {
+            //Compile time error
+            //Local inner class can't be private
+        }
+ 
+        protected class LocalInnerClassTwo
+        {
+            //Compile time error
+            //Local inner class can't be protected
+        }
+ 
+        public class LocalInnerClassThree
+        {
+            //Compile time error
+            //Local inner class can't be public
+        }
+ 
+        class LocalInnerClassFour
+        {
+            private int i;    //can have private member
+            protected int j;  //can have protected member
+            public int k;    //can have public member
+            int m;          //can have default member
+        }
+    }
+}
+->Local inner classes can be abstract or can be final but not both.
+class OuterClass
+{
+    void methodOne()
+    {
+        abstract class LocalInnerClassOne
+        {
+            //abstract local inner class
+        }
+ 
+        final class LocalInnerClassTwo
+        {
+            //final local inner class
+        }
+    }
+}
+c) Anonymous Inner Classes
+->Anonymous inner classes are the inner classes without a name
+-------------------------------------------------------------
+3.What is the main difference between static and non-static nested classes?
+->The main difference between static and non-static nested classes is that you need not to instantiate the outer class to access static nested classes. 
+But, to access non-static nested classes, you have to instantiate the outer class.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+4.Differences Between Shallow Copy Vs Deep Copy In Java.
+->Cloning is a process of creating an exact copy of an existing object in the memory
+->In Java, clone() method of java.lang.Object class is used for cloning process.
+->This method creates an exact copy of an object on which it is called through field-by-field assignment and returns the reference of that object.
+->The objects which implement Cloneable interface are only eligible for cloning process.
+->The default version of clone() method creates the shallow copy of an object
+->To create the deep copy of an object, you have to override the clone() method.
+
+Shallow Copy In Java:
+->The default version of clone() method creates the shallow copy of an object
+->The shallow copy of an object will have exact copy of all the fields of original object.
+->If original object has any references to other objects as fields, then only references of those objects are copied into clone object.
+->Shallow copy is fast and also less expensive
+->Shallow copy is preferred if an object has only primitive fields.
+->Any changes made to cloned object will be reflected in original object or vice versa.
+
+DeepCopy :
+->Deep copy of an object will have exact copy of all the fields of original object just like shallow copy.
+ But in additional, if original object has any references to other objects as fields,
+ then copy of those objects are also created by calling clone() method on them
+->	Deep copy is slow and very expensive.
+->Any changes made to cloned object will not be reflected in original object or vice versa.
+->Deep copy is preferred if an object has references to other objects as fields.
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+5.Differences Between Static Binding And Dynamic Binding In Java :
+
+Static Binding																	Dynamic Binding
+->It is a binding that happens at compile time.										->It is a binding that happens at run time.
+->Actual object is not used for binding.											->Actual object is used for binding.
+->It is also called early binding because binding happens during compilation.		->It is also called late binding because binding happens at run time.
+->Method overloading is the best example of static binding.							->Method overriding is the best example of dynamic binding.
+->Private, static and final methods show static binding. Because, they can not be overridden.	->Other than private, static and final methods show dynamic binding. Because, they can be overridden.
+------------------------------------------------------------------------------------------------------------------------------------------------------
+6.Immutable List in Java
+
+->is a type of List which is immutable. It means that the content of the List are fixed or constant after declaration, that is, they are read-only.
+->If any attempt made to add, delete and update elements in the List, UnsupportedOperationException is thrown.
+->An ImmutableList does not allow null element either.
+->If any attempt made to create an ImmutableList with null element, NullPointerException is thrown.
+
+Creating ImmutableList:
+using copyOf()
+class GFG {
+  
+    // Function to create ImmutableList from List
+    public static <T> void iList(List<T> list)
+    {
+        // Create ImmutableMap from Map using copyOf()
+        ImmutableList<T> immutableList =
+                          ImmutableList.copyOf(list);
+  
+        // Print the ImmutableMap
+        System.out.println(immutableList);
+    }
+  
+    public static void main(String[] args)
+    {
+        List<String> list = new ArrayList<>(
+            Arrays.asList("Geeks", "For", "Geeks"));
+  
+        iList(list);
+    }
+}
+
+How is it different from Collections.unmodifiableList()?
+Collections.unmodifiableList creates a wrapper around the same existing List 
+such that the wrapper cannot be used to modify it. However we can still change original List.
+
+ public static void main(String[] args)
+    {
+        List<String> list = new ArrayList<>();
+        list.add("Geeks");
+  
+        // Create ImmutableList from List using copyOf()
+        List<String> iList = Collections.unmodifiableList(list);
+  
+        // We change List and the changes reflect in iList.
+        list.add("For");
+        list.add("Geeks");
+  
+        System.out.println(iList);
+    }
+--------------------------------------------
+Exception Concepts
+If SuperClass does not declare an exception, then the SubClass can only declare unchecked exceptions, but not the checked exceptions.
+If SuperClass declares an exception, then the SubClass can only declare the child exceptions of the exception declared by the SuperClass, but not any other exception.
+If SuperClass declares an exception, then the SubClass can declare without exception.
+-------------------------------------------------------
+Why so we use SerialVersionUID : 
+SerialVersionUID is used to ensure that during deserialization the same class (that was used during serialize process) is loaded.
+
+->The Serialization runtime associates a version number with each Serializable class called a SerialVersionUID
+->which is used during Deserialization to verify that sender and reciever of a serialized object have loaded classes for that object which are compatible with respect to serialization
+-> A Serializable class can declare its own UID explicitly by declaring a field name.
+->It must be static, final and of type long.
+->i.e- ANY-ACCESS-MODIFIER static final long serialVersionUID=42L;
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Break SingleTon class ?
+1.Reflection ,solve by using enums
+2.Implement Serializable , resolve by overriding readReslve()
+3.Cloning , resolve by throwing CloneNotSupportedException/ return instane in clone method.
+------------------------------------------------------------------------------------------------------------
+HashMap workiing
+as sooon as hahmap initiaized there are 16 buckets gets created.
+hash map ut calculates hash code and mod by capacity which iwill results in buckets
+a node gets created....next if hash collision , using equals checks if key is ssame or not,
+if different a linked list node is created and inital node points to new node 
+------------------------------------------------------------------------------------------------------------
+iterattor vs list iterator
+set and list can be traversed using iterator            only list
+only forward											both forward nd backward
+			
+------------------------------------------------------------------------------------------------------------			
+Fail fast 									Fail safe
+---------------------------------------------------------------------
+->works on collection objects 				->works on clone of collection objects
+->throws concurrent modification eexception	->modification is allowd
+->doesnt require extra memory				->it requires extra memory ,consumes heap
+->AL,HM,Vector,HS basically collections 	->ConcurrentHashMap,CopyOnwritearraylist , java.util.concurrent package
+of java.util packaage			
+-------------------------------------------------------------------------
+what is copyonwritearrayList how is it different from list and vector ?
+			
+-> fail safe collection , provides better concurrent access than synchronized list.
+-> doesnt throw concurrent modification exception
+-> its better than arraylist coz is thread safe and better than vector in terms of concurrency
+-> CopyOnWriteArrayList creates a Cloned copy of underlying ArrayList, for every update operation at a certain point both will be synchronized automatically.
+->It is costly to use because for every update operation a cloned copy will be created.
+->CopyOnWriteArrayList is the best choice if our frequent operation is read operation.
+->the Iterator of CopyOnWriteArrayList can not perform remove operation otherwise we get Run-time exception saying UnsupportedOperationException.
+->add() and set() methods on CopyOnWriteArrayList iterator also throws UnsupportedOperationException.
+
+---------------------------------------------------
+Collections.unmodifiableColleection(Collection c) ?
+->we can create a readonly collcetion ,any operation  to change the collection will throw UnsupportedOperationException.
+--------------------------------------------------
+Create immutable class
+->data memebres private 
+->class final
+->getter
+using constructor we can initialize;
+
+-----------------------------
+Hierarchy / life cycle of a thread ? 
+-use of wait and sleep ?
+-use of  join?
+-yield ?
+----------------------------
+-What is concurrent hashmap?How ConcurrentHashMap works in Java?
+The constructor of ConcurrentHashMap looks like this :
+
+public ConcurrentHashMap (int initialCapacity, float loadFactor, int concurrencyLevel)
+->So the above line  creates a new, empty map with the specified initial capacity, load factor and concurrency level.
+->initial capacity parameter and concurrency level parameters of ConcurrentHashMap constructor (or Object) are  set to 16 by default.
+->instead of a map wide lock, ConcurrentHashMap maintains  a list of 16 locks by default
+->each of which is used to lock on a single bucket of the Map
+->This indicates that 16 threads can modify the collection at the same time , 
+->given ,each thread works on different bucket. 
+->So unlike hashtable, we perform any sort of operation ( update ,delete ,read ,create) without locking on entire map in ConcurrentHashMap.
+->Retrieval operations (including get) generally do not block
+-> so may overlap with update operations (including put and remove)
+
+---------------------------
+-diffrernce b/w hashtable vs hashmap?
+-------------------------------
+-garbage collection ?
+--performs clean up task ...
+------------------------------------
+-diffrent parts of heap memory? 
+---------------------------------
+features of 1.8 java
+functionl interfaces
+lambda expression
+Streams api
+optional
+method refrences 
+-------------------
+default methods in interfaces ?
+--------------------------
+Factory design pattern ?
+1 interface , multiple implemntation , 
+Spring bean factory is good example.
+------------------------
+default scope of spring ,and its types.
+-----------------
+what is DI ? and its types
+---------------------

@@ -1,0 +1,465 @@
+Concepts
+----------
+1.JVM Architecture
+JDK,JRE,JVM
+JVM - abstract machine ->RTE ->byteciode
+JRE -> s/w tools---developing->JAVA apps
+JDK -> JVM + javac +java
+-JVM working
+-Loading -> BSCL , EXCL , APCL
+-Linking -> Verify,Prepare ,Resolve
+-Initialization
+
+Method Area
+Heap Area
+Stack
+PC Registers
+Native Method stack
+
+Execution Engine
+-JIT comipler
+-Interpretor
+
+Native Mthod Interface
+-------------------
+2.oops
+-Encapsulation ->data hiding + abstraction
+advtges
+disdavtg
+-abstraction
+advtage
+-polymorphism
+ overloading (SB)
+ overriding (DB)
+-Inheritance
+---------------------
+3.final,finally,finalize()
+---------------
+4.== vs .equals()
+--------------
+5.System.out.println()
+---------------
+6.public static void main (args []v)
+main()?
+public
+static 
+void
+order
+final synch strictfp 
+---------------
+7.Multitasking?
+-Procees based
+-Thread baesed
+
+Thread ?
+-ways to create?
+-Thread schedular?
+- why to call start()?
+-Over loading run ()?
+-override run ()?
+-Overriding start()?
+     
+	 
+	 t.start()      TS->Processor         run() -> completes
+New---------->Ready------------->Running---------------------->Dead
+T t= new T()
+
+-Illegalstateexception
+-Runnable interface (java.lang)
+-Thread claas constructors
+-Thread.currentThread().geName()
+-ThreadPriority(3 , max ,default priority)
+-Yield() ( p s native void yield()) Thread.yield()
+-Join() (p final void join() 3 methods,InterruptedException)
+-sleep() (p s native void sleep() 2 method, InterruptedException)
+-Interrupt() (public void interrupt())
+-differenec between yield-join-sleep (purpose ,overloaded ? ,InterruptedException?,native ?,final ?)
+-synchronized ( methods and blocks)
+	-why ?
+	-advantage?
+	-disadvantage?
+	-internal concept of synchronization(locK)
+	-static synchronized (class level lock)
+-wait,notify(),notifyAll()
+-deadlock vs starvation
+-daemon threads
+	-isDaemon()
+	-setDaemon(boolean b)
+	
+-----------------------------------------------
+8.Exception handling
+-Exception ?
+-Runtime stack mechanism
+-Default Exception handler
+
+-Exception Hierrarchy
+	Throwable
+		-Excecption
+		-Error
+		
+		-Excecption
+			-RTE
+				-AE
+				-NPE
+				-CCE
+				-IndexOE
+					AIOBE
+					SIOBE
+				-IAE
+					NFE
+			-IOException
+				-EOFE
+				-FNFE
+			-InterruptedException
+		-Error
+			-VMError
+				-SOE
+				-OME
+			-AssertionError
+
+
+-checked and unchecked exceptions
+-fully checked vs partially checked
+-Finally vs System.exit(0) 0  ->normal 1->abnormal
+-Throw keyword
+-throws keyword
+------------------------------------------
+9.Generics ?
+-Generics are used to create Generic Classes and Generic methods which can work with different Types(Classes).
+
+How do you declare a Generic Class?
+class MyListGeneric<T>
+
+What are the restrictions in using generic type that is declared in a class declaration?
+If a generic is declared as part of class declaration, it can be used any where a type can be used in a class - method (return type or argument), 
+member variable etc
+
+
+->How can we restrict Generics to a subclass of particular class?
+
+T extends Number
+
+class MyListRestricted<T extends Number> {
+    private List<T> values;
+
+    void add(T value) {
+        values.add(value);
+    }
+
+    void remove(T value) {
+        values.remove(value);
+    }
+
+    T get(int index) {
+        return values.get(index);
+    }
+}
+
+MyListRestricted<Integer> restrictedListInteger = new MyListRestricted<Integer>();
+restrictedListInteger.add(1);
+restrictedListInteger.add(2);
+
+String not valid substitute for constraint "T extends Number".
+
+//MyListRestricted<String> restrictedStringList = 
+//                new MyListRestricted<String>();//COMPILER ERROR
+
+How can we restrict Generics to a super class of particular class?
+
+T super Number
+
+->Can you give an example of a Generic Method?
+
+static <X extends Number> X doSomething(X number){
+        X result = number;
+        //do something with result
+        return result;
+    }
+	
+Integer i = 5;
+Integer k = doSomething(i);
+
+->Type Erasure
+Type erasure is a process in which compiler replaces a generic parameter with actual class .
+
+Type Erasure rules
+-Replace type parameters in generic type with their bound if bounded type parameters are used.
+-Replace type parameters in generic type with Object if unbounded type parameters are used.
+-Insert type casts to preserve type safety.
+
+
+Advantage of Java Generics:
+->Type-safety :We can hold only a single type of objects in generics. It doesn’t allow to store other objects.
+->Type casting is not required: There is no need to typecast the object.
+Before Generics, we need to type cast.
+
+List list = new ArrayList();  
+list.add("hello");  
+String s = (String) list.get(0);//typecasting  
+After Generics, we don't need to typecast the object.
+List<String> list = new ArrayList<String>();  
+list.add("hello");  
+String s = list.get(0);  
+->Compile-Time Checking:It is checked at compile time so problem will not occur at runtime. The good programming strategy says it is far better to handle the problem at compile time than runtime.
+List<String> list = new ArrayList<String>();  
+list.add("hello");  
+list.add(32);//Compile Time Error  
+
+---------------------------------------------------------
+
+10.SingleTon class :
+creating signle ton class -static variable	, -private construcotr and - static factory method
+---------------------------------------------------------------------------------------------------------
+11.Collection Framework
+-difference b/w Arrays and Collection.
+-difference b/w collcetion vs Collections
+-Collection framework
+-List
+-Set
+-Map
+
+List 	- ArrayList	
+		- Lianked List
+		- Vector - Stack
+		
+Set		-HashSet -LinkedHashSet
+		-SortedSet - NavigableSet -TreeSet
+
+Queue	-PriorityQ
+		-BlockingQ -LinkedBlockingQ
+				   -PriorityBlockingQ
+
+Map 	-HashMap-LinkedHashMap
+		-WeakHashMap
+		-IdentityHashMap
+		-Dictionary-HashTable-Properties
+		-SortedMap-NavigableMap-TreeMap
+		
+Collection(I)
+	-methods
+	-Note :no concrete class that implements this interface
+
+-All Collection Classes implements cloneable and Serializable interface
+List(I)
+	
+	
+	-ArrayList 
+	-Vector
+	-ArrayList v Vector
+	-synchronied Arraylist
+	-RandomAccess
+	-LinkedList
+	-ArrayList v LinkdeList
+	-Vector
+	-Stack
+	
+	
+Cursors
+-Iterator	- read and remove (hasnext,next,remove) , replace not present,any collection clas
+-Enumerator  -read access , no remove (hasmoreelement,nextelement),legacy class.
+-listIterator -Bidirectional,read,remove,replace.,list impl class
+
+
+	
+Sorting
+	-Comparable(I)
+	-comparator(I)
+
+Set(I)
+	-hashset working
+	-Treeset v HashSet
+	
+Map(I)
+	-HashMap working
+	
+-LinkedHashMap vs LinkedHashSet
+-TreeMap
+-HashTable
+
+-HashMap v HashTable v synchronized HashMap vs Concurrent HashMap
+--------------------------------------------------------------------
+runnable v callable
+----------------------
+hashcode , equals.
+If you are overriding equals method then you should override hashcode() also.
+If two objects are equal then they must have same hashcode.
+If two objects have same hashcode then they may or may not be equal
+Always use same attributes to generate equals and hashcode as in our case we have used name.
+--------------------------------
+Interface v abstract class
+----------------------------
+Throw vs Throws
+-------------
+Equals vs hashcode
+---------------------
+String ?
+ -implements CharSequence,Serializable,Comparable
+ 
+ String 
+ StringBuffer
+ StringBuilder all implments CharSequence
+ 
+ -ways to create String
+ 
+ Difference between String , String Buffer , StringBuilder
+
+---------------------------------
+Break singleton class?
+---------------------------------
+Producer consumer Problem
+------------------------
+
+Volatile ? 
+can be used mostly onthe flags (boolean )
+lets assume we have thread T1 and T2
+ T1 wants to change the value of the flag to false
+ T2 while(flag){
+ //processing }
+ 
+ t1 makes flag to false to stop infinte processing
+ 
+T1------------> core1 ->local cache---------->
+T2------------> core2 ->local cache	---------> 1 shared cache
+
+the value of the flag is loaded in local cache
+T1 changes values to false
+T2 still still runs the changes made by T1 is not visible this is visibility problem
+
+we can solve this by volatile boolean flag =true.
+
+any changes are pushed to shared cache and is visible to the other threads also.
+
+
+ex :2
+int value=1;
+T1 -> value++
+T2 -> value++
+
+we expect value to be changes to 2 in t1 or t2 or which ever runs first.
+even if its volatile it wont work ths is synchronized problem
+read value 	, add 1 and write 
+ to solve ths problem we can use synchronixation
+ 
+ synchronized(obj){
+ value ++
+ }
+
+another way is atomic integer
+
+value.increment() - >read and write is done atomically
+
+if u have visibility problem use - volatile
+compound problems use -> atomic integerss
+---------------------------
+Why is Java not a pure Object-Oriented programming Language?
+-Objects always consume more memory than primitives. If we can solve our purpose without creating more number of objects, the performance will always be better.
+
+---------------------------
+What all access modifiers are allowed in a top level class & in an inner class
+
+Top level classes ⇒ default, public, abstract, final, strictfp
+Inner classes       ⇒ default, public, abstract, final, strictfp, private, protected, static
+--------------------------
+strictfp ?(strict floating point)
+- It is applicable for classes, methods but not for variables
+-The arithmetic of floating point numbers generally varies from platform to platform
+-strictfp can only be applied with concrete method. Therefore abstract+strictfp combination is illegal for methods.
+-applicable fro concrete methods
+------------------------
+types of variables
+1. Instance Variables (Non-Static Fields)
+
+2. Class Variables (Static Fields)
+
+3. Local Variables
+
+4. Parameters
+
+Only static, final, transient & volatile modifiers are applicable to variables.
+
+------------------------
+Why can an abstract method not be declared as private 
+-----------------------
+Can an Abstract class contain final method ?
+When we don’t need the child class to override a method of it’s parent class, 
+we declare the method as final. In general we observe this scenario in Template Method pattern of Java Design patterns. 
+Template method design pattern is to define an algorithm as skeleton of operations and leave the details to be implemented by the child classes.
+ Parent abstract class contain complete implementation a method and used in the algorithm.
+ This method in base class should be restricted so that the sub classes does not override it. So it is declared as final.
+ ---------------------------------
+ Can a Final class contain abstract method ?
+ A final class can’t contain an abstract method because a final class can’t be subclassed and without subclassing we can’t implement the abstract method.
+ ------------------------------
+ Can we use final & abstract both access modifiers in a method?
+ : No. It’s illegal contract in java. Abstract will force method to get overridden by child classes whereas final will not allow method to be overridden by child classes. So both are contradictory situation which will not solve the purpose of the method at all. 
+ ----------------------------------
+ 
+ 
+ abstract method ------> X private , final
+ abstract class -------> Y final method
+ Final class -----------> X abstract
+ final abstract method () -> not possible
+ 
+ 
+ ------------------------
+ class C extends B implements A {......}    valid
+ 
+ /extends keyword always comes before implements keyword/
+ ----------------------------------
+ What is difference between creating object of a class using new() & newInstance() ?
+ 
+ ->When we already know the name of the class whom object to be created we use new operator.
+ ->When we don’t already know the class name & it is to be decided dynamically at runtime we use newInstance(). 
+ Class c=Class.forName("com.dev.SampleClass");
+ SampleClass s=(SampleClass)c.newInstance();
+ 
+ ----------------------------------------------
+ 
+ What is difference between ClassNotFoundException & NoClassDefFoundError ?
+ 
+ ClassNotFoundException :
+ -----------------------
+> checked exceptions
+> We face this when we try to load class at runtime using Class.forName or  the class is not found in the class path
+
+NoClassDefFoundError :
+---------------------
+ is an unchecked exception
+ > It occurs when required class definition is missing at runtime while it was available at compile time
+ or example, if we have a method call from a class or accessing any static member of a Class and that class is not available during run-time then JVM will throw NoClassDefFoundError.
+ -----------------------------
+ What is covariant return type in java?
+ ->The concept of covariant return type was introduced in jdk 1.5.
+ ->the overriding method must have the same return type as it’s parent class method has
+ ->But jdk 1.5 onward, the overriding method’s return type can be the sub-type of it’s parent class method’s return type
+ 
+ class Base {
+	Number m1() {
+		return 24;
+	}
+}
+
+class child extends Base{
+	Short m1() {
+		return 2;
+	}
+}
+
+----------------------------------
+What is ‘stream’ in Java ?
+java.util.stream is a package introduced in jdk 1.8
+It has several interfaces & classes to work on streams(flow of data)
+-it is a technique to make processing of collection’s data easy by supporting functional-style operations
+
+------------------
+How can we restrict a class or interface to be subclassed without using final keyword? 
+
+->We can use sealed modifier(a preview feature of JDK 15) in the declaration of class or interface.
+->Class Child3 is not allowed to extend from class Parent
+->Only Child1 & Child2 can extend from Parent as they are part of ‘permits’ of the super class Parent.
+sealed class Parent 	permits Child1, Child2 { }
+class Child3 extends Parent{} // not allowed
+non-sealed class Child1 extends Parent{ } // allowed
+ 
+ 
+

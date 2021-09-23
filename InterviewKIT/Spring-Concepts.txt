@@ -1,0 +1,98 @@
+1.Spring Annotation
+1.@PathVariable - @PathVariable annotation is used to access the variable value in the URI path.
+POST   http://www.springbootdev.com/api/users/1/profile
+@PostMapping("/api/users/{user_id}/profile")
+public String getPathVariable(@PathVariable("user_id") Integer userId)
+{
+      //TODO implementation should goes here
+}
+
+Here you can see that user_id path variable is represented by userId variable. According to the sample URI request, the value of userId variable will be 1.
+
+2.@RequestParam :  annotation is used to access the query param in the query string. 
+In here,  subject=IT&country=LK can be identified as query string.
+
+@PostMapping("/departments/{department_id}/students")
+public List<Student> getStudents(@PathVariable("department_id") Integer departmentId,@RequestParam("subject") String subject,
+                                 @RequestParam("country") String country) {
+     //TODO implementation should goes here
+}
+Here you can see that path variable is represented by the departmentId and query params are represented  by subject and country variables.
+
+-@PathVariable and @RequestParam  are Spring framework owned annotations. 
+-Therefore those annotations can be used only within the spring based web applications.
+
+3.JAX-RS  : @QueryParam and @PathParam
+ Lets assume that we build JAX-RS web service. how do you access path variable and query parameters?  
+ JAX-RS has the equivalent annotations for above spring based annotations and they do the same job.
+
+@PathVariable (Spring based)  --- equivalent ---  @PathParam (JAX-RS)
+
+@RequestParam (Spring based)  --- equivalent ---  @QueryParam (JAX-RS)
+
+
+4.@Component : @Component is a class level annotation 
+and its purpose it to make the class as spring managed component and auto detectable bean for classpath scanning feature.
+-If any class is annotated with @Component it will be automatically detect by using classpath scan.
+-It works without @Configuration annotation
+
+
+5.@Bean :@Bean annotation indicates that a method produces a bean that should be managed by the Spring container.
+-It is used to explicitly declare a single bean, rather than letting Spring do it automatically.
+-It works only when class is also annotated with @Configuration.	
+@Configuration
+public class ApplicationConfig {
+
+ @Bean
+ public User adminUserProfile() 
+ {
+     return new User("Chathuranga","Tennakoon");
+ }
+}
+-@Bean annotation is equivalent to the <bean> tag
+-the method name is equivalent to the id attribute within the <bean> tag.
+
+6.@Configuration: annotation to inform Spring that this is a Java-based configuration file.
+
+7.@ComponentScan :The spring framework has a feature called component scanning and it will scan for the @Component or 
+its special purposes annotations within the specified class packages(class-paths) for identifying spring managed components. 
+After that it will create and register those components in the Spring ApplicationContext for the use of other components in the application.
+@ComponentScan(basePackages = {“com.springbootdev.samples”})
+or
+ <context:component-scan base-package =“com.springbootdev.samples”/>
+ 
+- these configurations tells the spring to scan the given package (in this case “com.springbootdev.samples”).
+- and its sub packages for finding the bean classes (spring managed components) that are annotated with @Component, @Controller, @Repostory and @Service.
+-Once the relevant classes are discovered, Spring will create the instances of such annotated bean classes and register themselves in the ApplicationContext when the Spring IOC container loads.
+-During the initialization of Spring’s ApplicationContext, Spring will discover those @Autowired, @Inject and @Resource annotations and inject the dependencies as required. 
+ 
+
+8.@EnableAsync
+-This is a class level annotation and should be applied for any of the configuration class. This will enable the spring asynchronous task execution support for your application.
+-this can be applied in the main configuration class of the application. The following code segment demonstrates the use of @EnableAsync with spring boot project.
+
+@SpringBootApplication
+@EnableAsync
+public class SpringBootApplication{
+
+9.@Async
+-This is a method level annotation.
+-The code inside the annotated method will be executed in a new background thread (apart from the main thread).
+-Simply, if you need to execute a piece of code in a new background thread (Other than the calling thread), then put them inside a method that is annotated with @Async.
+
+method should have the public access level.
+method should have the void return type or the actual return type must be wrapped with Future interface (java.util.concurrent.Future).
+
+public void sendEmail(){}
+public Future generateReport(){}
+
+10. @Primary
+
+When there are multiple beans of the same data-type, 
+developers use the Spring-specific @Primary annotation that automatically gives the higher preference to a particular bean
+
+-used with  @Component
+- on methods annotated with the @Bean
+
+@Primary	Give priority to inject the annotated bean
+@Qualifier	Determine the bean to be injected into the annotation

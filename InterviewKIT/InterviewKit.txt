@@ -110,7 +110,7 @@ Java8
 7.what are method references ?
 8.Java 8 date time api , how is it any better tahn java 7 date api?
 9.findFirst() vs findAny()
-
+10.Optional class
 Webservices
 ------------------
 1.how to secure the rest API?
@@ -154,7 +154,7 @@ env.getProperty("logging.level.root");
 8.what is profiling ?
 -Spring Boot Profiling provides a way to segregate parts of your application configuration and make it only available in the certain environment
 -Spring Boot Profiling is needed for applications which need’s to load different configurations for different environments Such as QA, DEV OR PROD.
-- Spring Boot allows to specify profile based configuration with application-{profileName}.properties
+-Spring Boot allows to specify profile based configuration with application-{profileName}.properties
 in app.properties
 spring.profiles.active=prod
 

@@ -1,0 +1,377 @@
+1. https://springbootdev.com/2017/04/12/spring-mvc-what-is-requestbody-and-responsebody/#:~:text=%40RequestBody%20and%20%40ResponseBody%20annotations%20are,response%20body%20with%20java%20objects.
+concepts ->
+@RequestBody
+@ResponseBody
+@Restcontroller
+@RequestParam
+Conttent-type
+Accept
+MessageConvertor
+
+-------------------------------
+2.Spring Framework.
+->Spring is an open-source framework that was built to simplify application development.
+->It has a layered structure which allows the developer to be selective about the components they use.
+->The Spring framework comprises several modules such as IOC, AOP, DAO, Context, ORM, WEB MVC
+->It can be thought of as a framework of frameworks because it provides support to various frameworks such as Struts, Hibernate, 
+
+--------------------------------------------------------------------------------
+3.Why is Spring preferred over the other frameworks?
+Very small size and lightweight
+Helps to achieve loosely coupled application by Inversion of Control.
+AOP support
+MVC framework
+Good Transaction Management feature
+Spring container
+Exception handling
+----------------------------------------------------------------------------------------
+4.Categorize the different types of modules in the Spring Framework
+Spring Core Container which includes core, beans, context, and expression language.
+AOP and Aspects.
+Data Integration Module which includes JDBC, OXM, ORM, transaction modules etc.
+Web Module that includes web, servlet, struts, and portlet.
+Test
+-------------------------------------------------------------------------------------
+5.Explain the Spring Configuration File.
+An XML file contains all the information about classes along with their configuration process and how these classes have interacted with the other classes.
+------------------------------------------------------------------------------------------
+6. Explain the concept of Dependency Injection.
+The basic concept of the dependency injection (also known as Inversion of Control pattern) is that you do not create your objects
+ but describe how they should be created. 
+ You don’t directly connect your components and services together in code 
+ but describe which services are needed by which components in a configuration file.
+ A container (in the case of the Spring framework, the IOC container) is then responsible for hooking it all up.
+---------------------------------
+ 7.What are different types of Dependency Injection? Explain them.
+ ->Setter-based Dependency Injection: :using setter method spring container will inject the dependencies.
+ ->Construction Based Dependency Injection: using constructor spring container will inject the dependencies.
+ ---------------------------------
+ 8.Explain the difference between constructor and setter injection?
+ 
+ 
+ ->partial injection is not allowed                    							->allowed 
+ ->The constructor injection doesn’t override the setter property				->overrides
+ ->Constructor injection creates a new instance if any modification is done		->not possible
+ ->In case the bean has many properties, then constructor injection is preferred->few properties 
+ ---------------------------------------------
+ 9.What is Bean in Spring?
+ ->A normal POJO class managed by Spring IOC container are called Spring beans. It is core part of Spring application
+ ----------------------------------------------------
+ 10.How can you configure Spring in your application?
+ XML based configuration :You define all your beans with tag in XML file and all dependencies are read using this XML file.
+Java based configuration :You can use @Configuaration and @Bean annotations to do it.
+Annotation based configuration :
+You can do dependency injection via annotation also instead of XML configuration. You can define bean autowiring using annotations. You can use @Component,@Repository,@Service and @Controller annotation to configure bean in Spring application.
+Annotations wiring is not turned on by default. You need to turn it on using :
+<context:annotation-config/> 
+------------------------------------------------------
+11.What are different bean scopes in Spring?
+singleton – Scopes a single bean definition to a single object instance per Spring IoC container.
+prototype – Return a new bean instance each time when requested
+request – Return a single bean instance per HTTP request.
+session – Return a single bean instance per HTTP session.
+globalSession – Return a single bean instance per global HTTP session.
+----------------------------------------------------
+12.	What is default scope of bean in Spring?
+singleton is default scope of a bean in Spring. 
+-----------------------------------------------------------
+13.ApplicationContext
+-Is an J2EE container
+-loads bean defination , wires the beans and dispense the beans
+-It loads beans on startup itself in case of singleton scope
+-for prototype scope it loads beans on request-------
+------------------------------------------------------
+14.What do you mean by bean autowiring in Spring?
+-Autowiring feature of spring framework enables you to inject the object dependency implicitly
+-----------------------------------------
+15.What are different modes of autowiring supported by Spring?
+no::Default, no auto wiring, set it manually via “ref” attribute as we have done in dependency injection via settor 
+byName:Autowiring by property name.
+byType:Autowiring by property datatype.
+contructor:
+autodetect:Spring first tries to wire using autowire by constructor, if it does not work, Spring tries to autowire by byType.
+-----------------
+16.what is AOP?
+AOP is a way to modify existing classes in a code base  change their behavior based on rules defined separately.
+This modification can be done before the classes are put into a jar/war, or can happen dynamically while the code is being loaded.
+---------------------------
+17.What is Aspect, Advice, Join point and pointcut in Spring AOP?
+Aspect - is like a services (It is a class that contains advices, joinpoints etc.)
+Advice - is like a service provider (Advice represents an action taken by an aspect at a particular join point. There are different types of advices:
+
+Before Advice: it executes before a join point.
+After Returning Advice: it executes after a joint point completes normally.
+After Throwing Advice: it executes if method exits by throwing an exception.
+After (finally) Advice: it executes after a join point regardless of join point exit whether normally or exceptional return.
+Around Advice: It executes before and after a join point.)
+
+Pointcut - It is an expression language of AOP that matches join points.
+PointCut - is a set of one or more JoinPoint where an advice should be executed
+@PointCut("execution(* com.tutorialspoint.*.*(..))")
+
+@PointCut("execution(* com.tutorialspoint.Student.getName(..))")
+It is an expression language of AOP that matches join points
+
+JoinPoint: join point is any point in your program such as method execution, exception handling,
+
+
+
+-------------------------------------------
+18.What is @Qualifier annotation in Spring?
+You can have more than one bean of same type in your XML configuration but you want to autowire only one of them ,so @Qualifier removes confusion created by @Autowired by declaring exactly which bean is to autowired.
+--------------------------------------------------------------------------------------------------------
+19.What is @Required annotation in Spring?
+This annotation simply indicates that the affected bean property must be populated at configuration time:
+either through an explicit property value in a bean definition or through autowiring. 
+---------------------------------------------------------------------------------------------------------
+20.What is the Life Cycle of a Bean in Spring?
+
+1.Instantiation – Spring container from the XML file finds the bean definition and then the bean is instantiated.
+2.Populate properties – Spring container populates all the properties mentioned in the bean definition with the help of dependency injection.
+3.Setting the name of Bean.
+4.Setting the bean factory.
+5.Pre-initialization and initialization of bean.
+6.Post initialization of bean.
+7.Destroy the bean by calling destroy () method.
+---------------------------------------------------------------------------------------------------------
+21.What are the ways to insert the collection concept in Spring?
+<set> element – It wires the set of values by eliminating the duplicates from them.
+<list> element – It is useful to insert or inject values and also allows duplicate values.
+<map> element – It is used to insert a key or name-value pair which can be of any type.
+<props> element – It is used to insert key or name-value pairs, but the type should only be the string.
+---------------------------------
+22.Is there any limitation of autowiring? If yes, explain.
+-There is always a possibility of overriding.>
+-Autowiring becomes complex when used in big applications compared to explicit wiring.
+-The developer will not be able to autowire primitive and Spring properties.
+--------------------------------
+23.How is an event handled in Spring?
+-Event handling is achieved through the ApplicationEvent class and ApplicationListner interface
+-When the bean implements ApplicationListner then ApplicationEvent gets generated to ApplicationContext and notifies that the bean is generated.
+-------------------------------------------
+24.What is the JDBC template and how to use it in Spring?
+-JDBC template is a template provided by the Spring framework to use JDBC more efficiently
+-JDBC template is generally used for conversion of database data into objects, execution of prepared and callable statements, and also supports in error handling for a database.
+------------------------------------------------------------
+25.Explain the Spring MVC framework.
+-MVC stands for Model, View, and Controller.
+-Spring MVC framework is used to develop web applications with good architecture flow and configurations
+-It is highly flexible in integration with the other frameworks.
+------------------------------------------------------------
+26. Explain Spring MVC Architecture.
+The flow of the Spring Architecture goes in the following way:
+-The request is received by the dispatcher servlet.
+-Dispatcher servlet sends the request to the handler mapping which provides the response in terms of controller class name.
+-Now the request is sent to the Controller from the dispatcher servlet, hence the controller processes the request and returns the model view object as a response to the dispatcher servlet.
+-Again, the dispatcher servlet sends the request to view resolver to get the correct view page.
+-Lastly, the dispatcher servlet sends the model object received to the browser page to display the result.
+--------------------------------------------
+27.What is the use of the Dispatcher Servlet?
+Dispatcher Servlet is used to handle all the incoming HTTP requests and responses from the client.
+ Overall, it controls all the communications from the handler to the controller to view the resolver to the actual view page.
+-------------------------------------------
+28.Explain Advice and its types.
+Any action taken by AOP is called an Advice.
+There are five types of Advice as mentioned below:
+
+Before advice.
+After advice.
+After returning advice.
+Around advice.
+Throws advice.
+---------------------
+29..What is Bean Factory?
+-core container
+-one instance of bean is available
+-it is lazily loaded
+-provides bean on request only-
+----------------------
+30.State the differences between ApplicationContext and BeanFactory in spring?
+
+->ApplicationContext allows more than one config files 						->BeanFactory only permits one.
+->ApplicationContext can print events to beans registered as listeners		->This feature is not supported by BeanFactory.
+->provides support for application of lifecycle events,						-> Not supported
+ internationalization messages and validation 
+ and also provides services like EJB integration, remoting, JNDI access and scheduling.
+ --------------------------------
+31.What are the methods of bean life cycle?
+Setup – called when bean is loaded into container
+Teardown – called when bean is unloaded into container
+-----------------------------
+32.What are the different types of events of Listeners?
+-ContextClosedEvent – This event is called when the context is closed.
+-ContextRefreshedEvent – This event is called when context is initialized or refreshed
+-RequestHandledEvent – This event is called when the web context handles request
+----------------------------------------------
+33. What are the types of the transaction management that is supported by spring?
+declarative
+programmatically
+-----------------------------------------------
+34.When are declarative and programmatic transaction management used?
+-When only a small amount of transactional operations is there, it is advised to use Programmatic transaction management
+- But if there is a big amount of transactional operations to be taken care of, declarative transaction management is preferred.
+----------------------------------------------------------------
+35. What is weaving?
+Weaving is used to create new proxy object by applying aspects to target object.
+Aspects-apllied to ->targetObj  ->PXY
+target Obj It is the object i.e. being advised by one or more aspects
+
+Aspects--advised->targetObj
+-------------------------------------------------
+36.Ways to implement the life cycle of a bean
+
+-By XML 
+ In this approach, in order to avail custom init() and destroy() method for a bean we have to register these two methods inside Spring XML configuration file
+ 
+ <!DOCTYPE
+	beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN"
+		"http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+			
+<beans>
+	<bean id="hw" class="beans.HelloWorld"
+			init-method="init" destroy-method="destroy"/>
+	
+</beans>
+
+-By Programmatic Approach:
+ we need to implement our bean with two interfaces namely InitializingBean, DisposableBean
+  will have to override afterPropertiesSet() and destroy()
+  - afterPropertiesSet() method is invoked as the container starts and the bean is instantiated whereas
+  -	the destroy() method is invoked just after container is closed
+  -To invoke destroy method we have to call close() method of ConfigurableApplicationContext.
+  
+- Annotation
+
+we need annotate init() method by @PostConstruct annotation and destroy() method by @PreDestroy annotation.
+-Note: To invoke the destroy() method we have to call the close() method of ConfigurableApplicationContext.
+
+in xml 
+<!-- activate the @PostConstruct and 
+@PreDestroy annotation -->
+  
+    <bean class="org.springframework
+.context.annotation
+.CommonAnnotationBeanPostProcessor"/>
+--------------------
+37.What are the main features of Spring framework?
+1.Lightweight: Spring is extremely lightweight, the basic version is around 1MB
+2.Inversion of Control (IoC):Dependency Injection or Inversion of Control is one of the most important features of Spring
+3.Aspect-Oriented Programming:AOP isolates secondary functions from the programmer’s business logic. This not only provides modularity but also makes the code maintainable
+4.MVC architecture: Spring comes with an MVC framework for web-applications. This framework is highly configurable using various technologies like JSP, Tiles, iText, and POI.
+5.JDBC exception handling: Spring comes with a predefined JDBC abstraction layer which simplifies the overall exception handling process.
+--------------------------------------------
+38.ContextLoaderListener ?
+-----------------------------------------
+34.what is MVC
+->is a design pattern that separates application to model view and controller to dveleop web applicationa
+------------------------
+what is spring mvc framework ?
+->spring mvc is a module in spring framework which is built on servlets API
+->provides MVC architecture to develop the webapplication using spring framework.
+-----------------------------
+40.spring 5 features ?
+-> java 8 and java7 supported ,old versions not supported
+	hibernate 5
+	tiles 3
+	tomcat 8.5+
+	junit 5
+->reactive programming
+->functional web framework
+--------------------------
+41.Advantages of Spring MVC
+->provides components like
+Dispatcher servlet
+Controllers
+view resolvers
+views,models
+Session attribute			
+
+can configure any view technology
+support for form binding(can be binded to model object) (sevrlvets were using req.getparamter)
+we can dveelop rest api also
+------------------------------
+42.Design patterns in spring
+Singleton
+Factory
+Prototype
+Adapter used by sspring web and spring mvc
+Proxy ->AOP
+Template pattern->Jdbctemplate,hibtemlate
+Frontcontroller ->Dispatcheerservlet
+DAO
+MVC
+
+-----------------------------------
+43.Role of handler Mapper
+->It used identify controller to handle a request in spring mvc
+-------------------------------------
+44.diffeent controllers
+Simple Form Conroller
+Abstract controller
+Multiaction controller
+
+--------------------------------------------
+45.map request to controller ?
+@requestMapping(value={"/","load"})
+public String load(){
+}
+---------------------
+46.ViewResolver ?
+is an interface to be implemented by objects that can resolve views by name
+
+-------------------------
+47.Different ViewResolvers 
+-AbstractCachingViewResolver 
+-XmlViewResolver 
+-ResourceBundleViewResolver 
+-UrlBasedViewResolver 
+-InternalResourceViewResolver 
+-VelocityViewResolver/FreeMarkerViewResolver
+-ContentNegotiatingViewResolver
+-----------------------------
+whtat is ContextLoaderListener?
+->is a servlet listener that loads all different configuration files(service layer, persistant layer )into spring application context.
+->this helps split spring configuration across multiple xml files.
+->this creates  the root apllication contexts and will be shared with child contexts  created by dispatcher servlet contexts.
+
+Web components will be loaded by WEBAPPLICATIONCONTEXT which will start by DS
+Business components will be loaded by CLL
+
+to create rootApplicationcontext which is responsible for handling Business components will be starte dby CLL
+CLL -> creates -> RootAppcontext and will share with Child context created by DS.
+
+IOC created  
+
+1 IOC creted by contextLL is parent(rootappcontext Created by CLL to manage business components)
+1 IOC dispacther servlet (web components) child container(XMLwebappcontext IOC)
+
+Parent contaier (rootAppcontext)
+Child Container (WEBAPPLICATIONCONTEXT)
+--------------------------------------
+
+what is @ModelAtribute ?
+
+<form modelAttribute="userModel">
+
+in controller , in method parameter (@ModelAttribute("userModel) User user)
+FormBinding object to controller request method.
+
+
+-------------------------------------------
+Spring form tag library :?
+can be binded to java model objects
+-----------------------------
+
+Model , ModelMap , ModelandView ?
+
+Model ->interface
+ModelMap -> stores data in key value format
+ModleandView -> returns model and view from controller
+----------------------------
+where to place static resources in spring mvc ?
+resources folder.
+-----------------------------
+Can we have multiple parameters with same name in request ?
+localhost:8080/login?name=abs&name=dsds&name=sss
+
+public string method(@RequestParam("name") String[]name)

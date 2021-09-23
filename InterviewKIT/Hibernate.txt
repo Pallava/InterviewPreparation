@@ -1,0 +1,959 @@
+1.What are advantages of Hibernate?
+
+-->Hibernate supports Inheritance, Associations, Collections(List,Set,Map )
+-->In hibernate if we save the derived class object,  then its base class object will also be stored into the database, it means hibernate supporting inheritance
+-->supports One-To-Many,One-To-One, Many-To-Many-to-Many, Many-To-One
+-->in hibernate we only have Un-checked exceptions, so no need to write try, catch, or no need to write throws.
+-->Hibernate has capability to generate primary keys automatically while we are storing the records into database
+-->Hibernate has its own query language, i.e hibernate query language which is database independent
+-->While we are inserting any record, if we don’t have any particular table in the database, JDBC will rises an error like “View not exist”, and throws exception, but in case of hibernate, if it not found any table in the database this will create the table for us
+-->Hibernate supports caching mechanism
+-->Getting pagination in hibernate is quite simple.
+-->Hibernate supports annotations, apart from XML
+-->Hibernate provided Dialect classes, so we no need to write sql queries in hibernate, instead we use the methods provided by that API.
+
+--------------------------------------------------------------------------------------------------------------------------
+2.What is ORM?
+-->ORM stands for Object-Relational Mapping (ORM) is a programming technique for converting data between relational databases and object oriented programming languages such as Java, C#, etc.
+--------------------------------------------------------------------------------------------------------------------------
+3.What is a difference between Hibernate and JDBC?
+----------------------------------------------------------------------------------------------------
+				Hibernate								|		JDBC
+----------------------------------------------------------------------------------------------------
+-->				It is a framework,							It is database connectivity technology .
+-->				Hibernate support lazy loading 				It does not support lazy loading.
+-->				High Performance  							Low performance
+-->				Database independent						Database dependant.
+-->				suports caching								Need to write separate code for caching.
+-->				support for assosiation						no support.
+-->				Hibernate itself manage all transaction     We need to maintain explicitly database connection and transaction
+				
+-->				handles all unchecked exception				need to handle with try catch.
+----------------------------------------------------------------------------------------------------
+4.What is JPA
+->The Java Persistence API (JPA) is a specification of Java. It is used to persist data between Java object and relational database. JPA acts as a bridge between object-oriented domain models and relational database systems.
+
+As JPA is just a specification, it doesn't perform any operation by itself. 
+It requires an implementation. So, ORM tools like Hibernate, TopLink and iBatis implements JPA specifications
+ for data persistence.
+---------------------------------------------------------------------------------------------------
+5.What is a difference between Hibernate and JPA?
+
+		Hibernate 												 |	 JPA
+--------------------------------------------------------------------------------------------
+ -->	It is one of the most frequently used JPA implementation.	It is just a specification. Various ORM tools implement it for data persistence.
+ -->	It is defined in org.hibernate package.						It is defined in javax.persistence package.
+ -->	It uses Hibernate Query Language (HQL) as an 
+		object-oriented query language to perform database operations ->It uses Java Persistence Query Language (JPQL) as an object-oriented query language 															to 						perform database operations.			
+		
+-->		In hibernate, we use Session for handling the persistence of data -> we use Entity Manager.
+	
+----------------------------------------------------------------------------------------------------
+6.Explain Hibernate architecture
+
+Configuration  :-->The Configuration object is the first Hibernate object you create in any Hibernate application.
+				-->It is usually created only once during application initialization.
+				-->It represents a configuration or properties file required by the Hibernate.(hibernate.properties,hibernate.cfg.xml.).
+
+1.Session Factory --> thread safe.
+				  --> provides factory of session objects.
+				  --> provides 2nd level cache data.
+				  --> one SessionFactory object per database. 
+2.Session --> A Session is used to get a physical connection with a database.
+		  --> single threaded short lived object ,instantiated each time an interaction is needed with the database.
+		  --> It is factory of Transaction, Query and Criteria.
+		  --> It holds a first-level cache (mandatory) of data.
+		  --> provides methods to insert, update and delete the object.
+		  --> It also provides factory methods for Transaction, Query and Criteria.
+3.Transaction --> The transaction object specifies the atomic unit of work.
+			-->provides methods for transaction management.
+4.Query : -->Query objects use SQL or Hibernate Query Language (HQL) string to retrieve data from the database and create objects.
+		  --> used to bind query parameters, limit the number of results returned by the query, and finally to execute the query.
+5.Criteria -->Criteria objects are used to create and execute object oriented criteria queries to retrieve objects.
+------------------------------------------------------------------------------------------------------
+7. What’s general hibernate flow using RDBMS?
+->Load the Hibernate configuration file and create configuration object. It will automatically load all hbm mapping files
+->Create session factory from configuration object
+->Get one session from this session factory
+->Create HQL Query
+->Execute query to get list containing Java objects
+------------------------------------------------------------------------------------
+8.What is Hibernate validation framework ?
+->Hibernate validator can be used to validate data, which is a very important issue in every layer of an application.
+->For example, validating is important when submitting HTML forms. 
+->Hibernate validator framework provides many annotations, that can be used to validate input fields of a form against constraints.
+Ex :@Size(min=5, max=10, message="Your name should be between 5 - 10 characters.")
+    private String name;
+	@Min(value=5, message="Please insert at least 5 characters")
+    private String lastname;
+	@NotNull(message="Please select a password")
+    @Length(min=5, max=10, message="Password should be between 5 - 10 charactes")
+    private String password;
+	 @Range(min=18, message="You cannot subscribe if you are under 18 years old.")
+    private String age;
+----------------------------------------------------
+9.What design patterns implemented in Hibernate?
+->Proxy Pattern for lazy loading.
+->Factory pattern in SessionFactory
+->Domain Model Pattern – An object model of the domain that incorporates both behavior and data.
+
+---------------------------------------------
+10.What are ways to configure Hibernate?
+You can configure Hibernate mainly in three ways
+->Use the APIs (programmatically) to load the hbm file along with the database driver providing connection details.
+
+ex:  Configuration configuration = new Configuration()
+
+.addResource("com/hibexamples/Sample.hbm.xml")
+
+.setProperty("hibernate.dialect", "org.hibernate.dialect.DerbyTenSevenDialect")
+
+.setProperty("hibernate.connection.driver_class", "org.apache.derby.jdbc. MySQL5Dialect")
+
+->XML file based configuration ,
+	The default file name is hibernate.cfg.xml
+			<hibernate-mapping>
+			<class name="com.Sample" table="SAMPLE" lazy="false">
+			<id name="sid">
+			<column name="SID" sql-type="varchar(50)" not-null="true"/>
+			</id>
+			<property name="name">
+			<column name="NAME" sql-type="varchar(100)" not-null="true" unique="true"/>
+			</property>
+			<many-to-one name="field1" column="COL2" cascade="all"/>
+			</class>
+			</hibernate-mapping>
+
+->Property file based configuration
+ you may also create the hibernate.properties file in classpath to load configuration properties
+ new Configuration().configure("....");
+ -------------------------------------------------------------------
+ 11.What is a purpose of dialect in the configuration
+ Hibernate uses "dialect" configuration to know which database you are using so that it can convert hibernate query to database specific query.
+ HQL->SQL/Oracle
+ For example in the java suppose I write List employees = session.createQuery("FROM Employee").list();
+
+but when my dialect is <property name="hibernate.dialect"> org.hibernate.dialect.MySQLDialect
+
+The HQL ("FROM Employee") gets converted to "SELECT * FROM EMPLOYEE" before hitting the MySQL database
+-------------------------------------------------------------------
+12.How to use JNDI DataSource with Hibernate
+Step 1
+Configure data source in Server and create the JNDI name.
+We need to add below entry in tomcat’s server.xml
+<Resource name="jdbc/MyTestDB"
+      global="jdbc/MyTestDB"
+      auth="Container"
+      type="javax.sql.DataSource"
+      driverClassName="com.mysql.jdbc.Driver"
+      url="jdbc:mysql://localhost:3306/javainsimpleway"
+      username="root"
+      password="root"
+     
+      maxActive="100"
+      maxIdle="20"
+      minIdle="5"
+      maxWait="10000"/>
+	  
+Step 2
+Update the Resource name in web.xml or context.xml
+We need to make the Resource linking either in web.xml or context.xml of Tomcat server as below	  
+<ResourceLink name="jdbc/MyTestDB"
+              global="jdbc/MyTestDB"
+              auth="Container"
+              type="javax.sql.DataSource" />
+			  
+Step 3
+Configure Spring bean with JNDI Datasource
+<bean id="springDataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+  <property name="jndiName" value="java:comp/env/jdbc/MyTestDB"/>
+  <property name="lookupOnStartup" value="true"/>
+  <property name="proxyInterface" value="javax.sql.DataSource"/>
+</bean>
+ 
+<bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+   <property name="dataSource">
+    <ref bean="springDataSource" />
+    </property>
+</bean>
+-----------------------------------------------------------
+13.How to integrate Hibernate with a Spring Framework?
+->In hibernate framework, we provide all the database information hibernate.cfg.xml file.
+->But if we are going to integrate the hibernate application with spring, we don't need to create the hibernate.cfg.xml file
+->We can provide all the information in the applicationContext.xml file
+
+1.create table in the database It is optional.
+2.create applicationContext.xml file It contains information of DataSource, SessionFactory etc.
+	->In this file, we are providing all the informations of the database in the BasicDataSource object
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">  
+        <property name="driverClassName"  value="oracle.jdbc.driver.OracleDriver"></property>  
+        <property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"></property>  
+        <property name="username" value="system"></property>  
+        <property name="password" value="oracle"></property>  
+    </bean>  
+	->This object is used in the LocalSessionFactoryBean class object, containing some other informations such as mappingResources and hibernateProperties
+	<bean id="mysessionFactory"  class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">  
+        <property name="dataSource" ref="dataSource"></property>  
+        <property name="mappingResources">  
+        <list>  
+        <value>employee.hbm.xml</value>  
+        </list>  
+        </property>  
+          
+        <property name="hibernateProperties">  
+            <props>  
+                <prop key="hibernate.dialect">org.hibernate.dialect.Oracle9Dialect</prop>  
+                <prop key="hibernate.hbm2ddl.auto">update</prop>  
+                <prop key="hibernate.show_sql">true</prop>   
+            </props>  
+        </property>  
+    </bean> 
+	->The object of LocalSessionFactoryBean class is used in the HibernateTemplate class.
+	 <bean id="template" class="org.springframework.orm.hibernate3.HibernateTemplate">  
+    <property name="sessionFactory" ref="mysessionFactory"></property>  
+    </bean>  
+2.create Employee.java file It is the persistent class
+3.create employee.hbm.xml file It is the mapping file.
+4.create EmployeeDao.java file It is the dao class that uses HibernateTemplate.
+-> <bean id="d" class="com.javatpoint.EmployeeDao">  
+    <property name="template" ref="template"></property>  
+    </bean>  
+5.create InsertTest.java file It calls methods of EmployeeDao class.
+
+Note :You can enable many hibernate properties like automatic table creation by hbm2ddl.auto
+-----------------------------------
+14.What is Hibernate mapping file?
+->Hibernate mapping file is used by hibernate framework to get the information about the mapping of a POJO class and a database table.
+It mainly contains the following mapping information:
+->Mapping information of a POJO class name to a database table name
+->Mapping information of POJO class properties to database table columns
+
+Elements of the Hibernate mapping file:
+
+hibernate-mapping: It is the root element.
+Class: It defines the mapping of a POJO class to a database table.
+Id:  primary key of the table.
+generator: It is the sub element of the id element. It is used to automatically generate the id
+property: It is used to define the mapping of a POJO class property to database table column.
+Syntax:
+<hibernate-mapping>
+ <class name="POJO class name" table="table name in database">
+  <id name="propertyName" column="columnName" type="propertyType" >
+	<generator class="generatorClass"/>
+  </id>
+  <property name="propertyName1" column="colName1" type="propertyType " />
+  <property name="propertyName2" column="colName2" type="propertyType " />
+  ….
+ </class>
+ 
+</hibernate-mapping>
+-------------------------------------------
+15.What is a connection provider?
+The ConnectionProvider interface is not intended to be exposed to the application. Instead it is used internally by Hibernate to obtain connections.
+--------------------------------------------
+16.How to show Hibernate queries in the log?
+hibernate.cfg.xml
+<property name="show_sql">true</property>
+
+log4j.properties
+log4j.logger.org.hibernate.SQL=DEBUG
+--------------------------------------------
+17.How to get Hibernate statistics?
+->hibernate.generate_statistics = true.
+ Statistics are deactivated by default because it has a bad influence on the performance. 
+ So only activate them when you need them.
+-----------------------------------------
+18.What is Envers API?
+->The Envers project aims to enable easy auditing of persistent classes.
+ All that you have to do is annotate your persistent class or some of its properties,
+ that you want to audit, with @Audited. For each audited entity, a table will be created, 
+ which will hold the history of changes made to the entity. You can then retrieve and query historical data without much effort.
+----------------------------------------
+19.What is @Audited annotation ?
+  with @Audited. For each audited entity, a table will be created, 
+ which will hold the history of changes made to the entity. You can then retrieve and query historical data without much effort.
+------------------------------------------
+20.What are ways to map entity
+->There are two ways: (1) using annotations in Java code, and
+ (2) using XML files using either JPA standard format or Hibernate hbm.xml
+ -------------------------------------------
+ 21.What are equals() and hashCode() overriding rules?
+ ----------------------------------------------
+ 22.How to map entity using annotations?
+ @Entity annotation to the Employee class, which marks this class as an entity bean.
+ The @Table annotation allows you to specify the details of the table that will be used to persist the entity in the database.
+ @Id annotation will automatically determine the most appropriate primary key
+ @GeneratedValue annotation, which takes two parameters strategy and generator 
+ @Column annotation is used to specify the details of the column to which a field or property will be mapped
+ ------------------------------------------------
+ 23.What are requirements for Entity class?
+ ->The class must be annotated with the javax.persistence.Entity annotation.
+ ->The class must have a public or protected, no-argument constructor. The class may have other constructors.
+ ->The class must not be declared final. No methods or persistent instance variables must be declared final.
+ ->Entities may extend both entity and non-entity classes, and non-entity classes may extend entity classes.
+ ->Persistent instance variables must be declared private, protected, or package-private and can be accessed directly only by the entity class’s methods. Clients must access the entity’s state through accessor or business methods.
+ --------------------------------------------------------
+ 24.What happens if Entity doesn’t have a default constructor?
+ Hibernate uses default construtor to create bean object using reflections. 
+ Hibernate uses the setter methods to set the properties of the class. 
+ Hibernate is unable to use a bean which has no arg constructor.
+ 
+ Hibernate uses the default constructor to create entity objects. 
+ If the default constructor is not available in any of the entities,InstantiationException  is thrown.
+ -------------------------------------------------------
+ 25.Why Entity class can’t be final?
+ Hibernate uses the proxy pattern for performance improvement during lazy association,
+ by making an entity final, Hibernate will no longer be able to use a proxy as Java doesn't allow the final class to be extended.
+ 
+ ---------------------------------------------------------
+ 26.What are collections supported by Hibernate?
+ java.util.List
+java.util.Set
+java.util.SortedSet
+java.util.Map
+java.util.SortedMap
+java.util.Collection
+ ---------------------------------------------------------
+27.What is Bag collection and how can we use it?
+The bag is just like List but it doesn't require index element.
+<bag name="answers" table="ans101">  
+     <key column="qid"></key>  
+     <element column="answer" type="string"></element>  
+   </bag>  
+   ----------------------------------------------
+ 28.What is a difference between sorted collection and ordered collection?
+ sorted collection 
+ -------------------------------------------------------------------------
+ ->A sorted collection is sorting a collection by 
+ utilizing the sorting features provided by the
+ Java collections framework
+ ->If your collection is not large, it will be more efficient way to sort it.
+
+order collection 
+ -------------------------------------------------------------------------
+ ->Order collection is sorting a collection by specifying the order-by clause for sorting this collection when retrieval.
+ ->If your collection is very large, it will be more efficient way to sort it .
+  -------------------------------------------------------------------------
+
+29.What types of inheritance mapping do you know in Hibernate?
+-> There are three inheritance mapping strategies defined in the hibernate:
+
+1.Table Per Hierarchy
+->In table per hierarchy mapping,
+ single table is required to map the whole hierarchy, 
+ an extra column (known as discriminator column) is added to identify the class.
+ 
+	Employee 
+ ->Regular_emp subclass of employee
+ ->contract_emp subclass of employee
+ 
+@Entity  
+@Table(name = "employee101")  
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)  
+@DiscriminatorColumn(name="type",discriminatorType=DiscriminatorType.STRING)  
+@DiscriminatorValue(value="employee")  
+public class Employee {  }
+
+@Entity  
+@DiscriminatorValue("contractemployee")  
+public class Contract_Employee extends Employee {  }
+ 
+@Entity  
+@DiscriminatorValue("regularemployee")  
+public class Regular_Employee extends Employee {  }
+ 
+-------------------- --------------------
+o/p 				|					 |	
+-------------------- --------------------
+employee			|
+regularemployee		|
+contractemployee	|
+--------------------
+
+2.Table Per Concrete class
+->In case of table per concrete class, tables are created as per class. But duplicate column is added in subclass tables.
+
+->Here, we need to use @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS) annotation in the parent class 
+and @AttributeOverrides annotation in the subclasses.
+->@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS) specifies that we are using table per concrete class strategy. 
+It should be specified in the parent class only.
+->@AttributeOverrides defines that parent class attributes will be overriden in this class. 
+In table structure, parent class table columns will be added in the subclass table.
+
+@Entity  
+@Table(name = "employee102")  
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)  
+public class Employee {}
+
+@Entity  
+@Table(name="contractemployee102")  
+@AttributeOverrides({  
+    @AttributeOverride(name="id", column=@Column(name="id")),  
+    @AttributeOverride(name="name", column=@Column(name="name"))  
+})  
+public class Contract_Employee extends Employee{ }
+
+@Entity  
+@Table(name="regularemployee102")  
+@AttributeOverrides({  
+    @AttributeOverride(name="id", column=@Column(name="id")),  
+    @AttributeOverride(name="name", column=@Column(name="name"))  
+})  
+public class Regular_Employee extends Employee{ }
+
+
+3.Table Per Subclass
+->In this strategy, tables are created as per class but related by foreign key. So there are no duplicate columns.
+->We need to specify @Inheritance(strategy=InheritanceType.JOINED) in the parent class and @PrimaryKeyJoinColumn annotation in the subclasses.
+
+@Entity  
+@Table(name = "employee103")  
+@Inheritance(strategy=InheritanceType.JOINED)  
+  
+public class Employee {  }
+
+
+@Entity  
+@Table(name="contractemployee103")  
+@PrimaryKeyJoinColumn(name="ID")  
+public class Contract_Employee extends Employee{  }
+
+@Entity  
+@Table(name="regularemployee103")  
+@PrimaryKeyJoinColumn(name="ID")  
+public class Regular_Employee extends Employee{  }
+
+----------------------------------------------------------------
+30 .What types of associations do you know?
+1.many-to-one
+2.one-to-one
+3.one-to-many
+4.many-to-many
+
+----------------------------------------------------------------
+31.How to a indicate that field should not be persisted?
+@Transient 
+----------------------------------------------------------------
+32.How to make entity immutable using Hibernate ?
+ @Immutable
+ --------------------------------------------------------------
+33.How to map primary key?
+@Id
+ --------------------------------------------------------------
+34.What generation id strategies do you know?
+
+Ex : 
+Store table: store_id | store_name | store_url
+
+Coupon table: coupon_id | coupon_name | store_id
+
+1.GenerationType.AUTO 
+-----------------------
+->The GenerationType.AUTO is the default generation type and lets the persistence provider choose the generation strategy.
+->it selects a generation strategy based on the database specific dialect
+@Id
+@GeneratedValue(strategy = GenerationType.AUTO)
+private Long id;
+->If you use GenerationType.AUTO then hibernate internally creates hibernate_sequence table to maintain the sequence number, 
+the more important thing to consider is, it shares the sequence number across the tables.
+
+Eg: if store_id is 1 then the coupon_id will start from 2 and 3 and hibernate_sequence table has the next value 4.
+All Tables: (3 tables – 2 entity tables + hibernate_sequence table by hibernate)
+----------------------------
+2.GenerationType.IDENTITY
+-------------------------
+-> Hibernate relies on an auto-incremented database column to generate the primary key
+->All Tables (No extra tables created)
+->Store table: (sequences are starting from 1)
+->Coupon table: (sequences are starting from 1)
+->GenerationType.Identity does not create any additional sequences / sequence tables.
+->Every table/entity created with GenerationType.IDENTITY starts its value from 0.
+@Id
+@GeneratedValue(strategy = GenerationType.IDENTITY)
+@Column(name = "coupon_id")
+private Long couponId;
+----------------------------
+3.GenerationType.SEQUENCE 
+------------------------------------
+All Tables: (2 sequences are created by hibernate for 2 entities store, coupon)
+
+->store table: (sequences are starting from 1 from store sequence)
+->store sequence: (Auto created / custom sequence)
+->coupon table: (sequences are starting from 1 from coupon sequence)
+->coupon sequence: (Auto created / custom sequence)
+->Here we specified it as allocationSize = 100, so it returns 201.
+-> Hibernate requests the primary key value from a database sequence,
+@Id
+@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "coupon_seq")
+@SequenceGenerator(name = "coupon_seq", sequenceName = "coupon_seq", allocationSize = 100)
+@Column(name = "coupon_id")
+private Long couponId;
+
+->If you don’t provide any additional information, Hibernate will request the next value from its default sequence.
+-------------------------------------------------------------------
+
+--------------------------
+4.GenerationType.TABLE
+--------------------------
+->Hibernate uses a database table to simulate a sequence.
+@Id
+@GeneratedValue(strategy = GenerationType.TABLE, generator = "book_generator")
+@TableGenerator(name="book_generator", table="id_generator", schema="bookstore")
+private Long id;
+-------------------------------
+
+35.What are main interfaces in Hibernate?
+Configuration.
+SessionFactory.
+Session.
+Query.
+Criteria.
+Transaction.
+---------------------------------
+36.What is Hibernate Session?
+question 6
+-------------------------------
+37.Is session thread-safe ?
+No.
+-------------------------------
+38.What is a difference between openSession() and getCurrentSession()?
+
+						openSession																getCurrentSession
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------	
+1.Session object 	|	->	It always create new Session object									->It creates a new Session if not exists ,
+																								  else use same session which is in current hibernate context
+2.Flush and close	|	->You need to explicitly flush and close session objects				->You do not need to flush and close session objects, 
+																								  it will be automatically taken care by Hibernate internally.
+3.Performance		|	->In single threaded environment , It is slower than getCurrentSession	->In single threaded environment , It is faster 				than 																								getOpenSession
+4.Configuration		|	->You do not need to configure any property to call this method			->You need to configure additional property 				                                                                          “hibernate.current_session_context_class”
+																								  to call getCurrentSession method, otherwise it will throw exceptions.
+------------------------------------------------------------------------------------------------------------------------------------------------------------------			
+39.How to create SessionFactory?
+->To create a SessionFactory we can define the configuration in hibernate.properties, hibernate.cfg.xml or create it programmatically.
+
+<hibernate-configuration>
+<session-factory>
+		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="connection.url">jdbc:mysql://localhost/musicdb</property>
+        <property name="connection.username">root</property>
+        <property name="connection.password"/>		
+		<property name="connection.pool_size">5</property>
+
+        <!-- Defines the SQL dialect used in Hibernate's application -->
+        <property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>
+
+        <!-- Enable Hibernate's automatic session context management -->
+        <property name="current_session_context_class">thread</property>
+
+        <!-- Disable the second-level cache  -->
+        <property name="cache.provider_class">org.hibernate.cache.internal.NoCachingRegionFactory</property>
+
+        <!-- Display and format all executed SQL to stdout -->
+        <property name="show_sql">true</property>
+        <property name="format_sql">true</property>
+
+        <!-- Drop and re-create the database schema on startup -->
+        <property name="hbm2ddl.auto">update</property>
+
+        <!-- Mapping to hibernate mapping files -->
+        <mapping resource="org/kodejava/example/hibernate/model/Label.hbm.xml"/>
+    </session-factory>
+</hibernate-configuration>		
+
+public class SessionFactoryHelper {
+    private static final SessionFactory sessionFactory;
+
+    static {
+        try {
+            // Build a SessionFactory object from session-factory config
+            // defined in the hibernate.cfg.xml file. In this file we
+            // register the JDBC connection information, connection pool,
+            // the hibernate dialect that we used and the mapping to our
+            // hbm.xml file for each pojo (plain old java object).
+            Configuration config = new Configuration();
+            sessionFactory = config.configure().buildSessionFactory();
+        } catch (Throwable e) {
+            System.err.println("Error in creating SessionFactory object."
+                    + e.getMessage());
+            throw new ExceptionInInitializerError(e);
+        }
+    }
+
+    public static void main(String[] args) {
+        Session session = SessionFactoryHelper.getSessionFactory()
+            .getCurrentSession();
+
+        System.out.println("session = " + session);
+    }
+
+    /**
+     * A static method for other application to get SessionFactory object
+     * initialized in this helper class.
+     */
+    public static SessionFactory getSessionFactory() {
+        return sessionFactory;
+    }
+}
+------------------------------------
+40.Is SessionFactory thread-safe?
+Yes
+----------------------------------------
+41.What is HibernateTemplate?	
+-org.springframework.orm.hibernate.HibernateTemplate is a helper class which provides different methods for 
+querying/retrieving data from the database. 
+It also converts checked HibernateExceptions into unchecked DataAccessExceptions.
+---------------------------------------------
+42.How many instances of Session and SessionFactory are usually created
+SessionFactory objects are one per application and Session objects are one per client
+-------------------------------------------------
+43.What hibernate object states do you know?
+
+1. Transient Object State:
+->An object which is not associated with hibernate session and does not represent a row in the database is considered as transient.
+->It will be garbage collected if no other object refers to it.
+->An object that is created for the first time using the new() operator is in transient state
+->When the object is in transient sate then it will not contain any identifier (primary key value)
+->You have to use save, persist or saveOrUpdate methods to persist the transient object.
+
+Employee emp = new Employee();
+emp.setName("Ravi Raj");
+// here emp object is in a transient state
+
+2. Persistent Object State:
+->An object that is associated with the hibernate session is called as Persistent object.
+->When the object is in persistent state, then it represent one row of the database and consists of an identifier value
+->You can make a transient instance persistent by associating it with a Session.
+
+Long id = (Long) session.save(emp);
+// emp object is now in a persistent state.
+
+3. Detached Object State:
+->Object which is just removed from hibernate session is called as detached object.The sate of the detached object is called as detached state.
+->When the object is in detached sate then it contain identity but you can’t do persistence operation with that identity.
+->Any changes made to the detached objects are not saved to the database.
+-> The detached object can be reattached to the new session and save to the database using update, saveOrUpdate and merge methods.
+
+session.close();
+//object in detached state
+
+------------------------------------------------------------
+44.What is a detached object?
+-->Object which is just removed from hibernate session is called as detached object.
+------------------------------------------------------------
+45.Can we reattach detached object and how to do it
+---------------------
+46.When object becomes detached?
+->It becomes detached when:
+
+you explicitly call .detach()
+close the session
+close the entity manager
+--------------------------------------
+47.What is a cascade update?
+
+-----------------------
+48.What cascade types do you know?
+-> cascade attribute transfers operations done on one object onto its related child objects
+->if we write cascade = “all” then all operations like insert, delete, update at parent object will be effected to child object also
+->defualt value is "none" ,means no operation is transferred to child class.
+PERSIST ->In this cascade operation, if the parent entity is persisted then all its related entity will also be persisted.
+MERGE ->In this cascade operation, if the parent entity is merged then all its related entity will also be merged.
+DETACH ->if the parent entity is detached then all its related entity will also be detached.
+REFRESH ->if the parent entity is refreshed then all its related entity will also be refreshed.
+REMOVE -> if the parent entity is removed then all its related entity will also be removed.
+ALL ->all the above cascade operations can be applied to the entities related to parent entity.
+----------------------------
+49.What is a dirty checking mechanism
+->is a concept to avoid time consuming data base write actions
+->all necessary update are done with affecting the  other fields .
+->hibernate checks state of the object from the hibernate session , if no changes are there then no update is done.
+------------------------------
+50.What loading strategies do you know?
+->Lazy
+->Eager
+---------------------------------
+51.What is FetchType?
+->Defines strategies for fetching data from the database.
+---------------------------------------------------------
+52.What is default FetchType for @OneToMany (@ManyToMany, @OneToOne)?
+@OneToOne – Default fetch type is EAGER
+@OneToMany – Default fetch type is LAZY.
+@ManyToOne – Default fetch type is EAGER.
+@ManyToMany – Default fetch type is LAZY.
+--------------------------------------------------------
+53.What is the difference between get() and load() ? (https://www.youtube.com/watch?v=W6vPLnoraqM)
+								get															load
+----------------------------------------------------------------------------------------------------------------------------------------
+1.Database retrieval	|	   It always hits the database								-	It does not hit database (when u use the object result then it will hit)
+2.if null				|	   If it does not get the object with id, it returns null	-	If it does not get the object with id, it throws ObjectNotFoundException
+3.Proxy					|	   It returns real object									-	It returns proxy object(lazy Loading)
+4.Use					|	   If you are not sure if object with id exists or not, 	-	If you are sure about existence of object, you can use load
+							   you can use get.
+							   
+----------------------------------------------------------------------------------------------------------------------------------------						   
+
+ 54.What is a difference between merge() and update() methods
+ ->Both update() and merge() methods in hibernate are used to convert the object which is in detached state into persistence state.
+ 
+How update() works ?:
+When we call update() method on any object,
+ it intern checks, if that object is already existed in session cache or not — 
+ if currently updating object is already there in session cache then it throws an exception called NonUniqueObjectException. 
+ Otherwise, it will update the object.
+ 
+How merge() works? :
+If we call merge() method, then it verifies whether the same object has existed in the session cache or not. 
+If the object has lived in the cache, then the current changes are copied into the cache; otherwise, it will load the values to cache.
+----------------------------------------------------------------------------------------------------------------------------------------	
+55.What is a difference between methods save(), saveOrUpdate() and persist()?
+->save()  : generates a new identifier and INSERT record into the database.
+		  : return type of save is Serializable Object.  
+		  : save method can be used inside or outside the transaction boundaries.
+		  : But in the case of save() INSERT happens immediately, no matter if you are inside or outside of a transaction.
+		  : is used to bring a transient object to a persistent state 
+->saveOrUpdate(): can either INSERT or UPDATE based upon the existence of a record. 
+Clearly, saveOrUpdate is more flexible in terms of use but it involves extra processing to find out whether a record already exists in the table or not.
+				:brings transient (new) and detached (existing) object into the persistent state ,It is often used to re-attach a detached object into a Session.
+->persist() :it is used to move a transient object to the persistent state by storing it into the database but it doesn't return the database identifier.
+			:Persist method can be used only within the boundary of a transaction.
+			:persist() method guarantees that it will not execute an INSERT statement if it is called outside of transaction boundaries.
+-----------------------------------------------------------------
+56.What is a DetachedCriteria?
+->The detached criteria allows you to create the query without Session
+->They are most useful for join conditions, subselects, and to query outside the current session.
+----------------------------------------------------------------------
+57.What is N+1 problem?
+
+explain employee ,department example
+
+departments has list of employees
+if we get all rows from department,fr each department hibernate will fire separate query for getting employees 
+
+we can solve this by using JOIN and fetch keywords in the query ,where it will fire a join query which will load eagerly the employees object	
+
+->hibernate 3 /4 doesnt have criteria interface .
+
+-> root.fetch("employees",JOINType.INNER)
+will solve in single query , we can avoid n+1	
+
+
+-----------------------------------------------------------------------------
+58.How can to use joins in Hibernate?	
+Hibernate supports 4 types of joins..
+
+Left Join ->Left join means, the objects from both sides of the join are selected and more objects  from left side are selected, 
+even though no equal objects are there at right side
+Right  Join ->Right join means equal objects are selected from database and more objects are from right side of join are 
+selected even though there is no equal objects are exist left side
+Full Join -> means, both equal and un-equal objects from both sides of join are selected
+Inner Join ->means only equal objects are selected  and the remaining are discarded.
+----------------------------------------------------------------------------
+59.How to execute stored procedures ?
+1. Native SQL – createSQLQuery
+You can use createSQLQuery() to call a store procedure directly.
+Query query = session.createSQLQuery(
+    "CALL GetStocks(:stockCode)")
+    .addEntity(Stock.class)
+    .setParameter("stockCode", "7277");
+            
+List result = query.list();
+for(int i=0; i<result.size(); i++){
+    Stock stock = (Stock)result.get(i);
+    System.out.println(stock.getStockCode());
+}
+
+2. NamedNativeQuery in annotation
+@NamedNativeQueries({
+    @NamedNativeQuery(
+    name = "callStockStoreProcedure",
+    query = "CALL GetStocks(:stockCode)",
+    resultClass = Stock.class
+    )
+})
+@Entity
+@Table(name = "stock")
+public class Stock implements java.io.Serializable {
+
+Query query = session.getNamedQuery("callStockStoreProcedure")
+    .setParameter("stockCode", "7277");
+List result = query.list();
+for(int i=0; i<result.size(); i++){
+    Stock stock = (Stock)result.get(i);
+    System.out.println(stock.getStockCode());
+}
+
+3. sql-query in XML mapping file
+<sql-query name="callStockStoreProcedure">
+    <return alias="stock" class="com.mkyong.common.Stock"/>
+    <![CDATA[CALL GetStocks(:stockCode)]]>
+    </sql-query>
+Query query = session.getNamedQuery("callStockStoreProcedure")
+    .setParameter("stockCode", "7277");
+List result = query.list();
+for(int i=0; i<result.size(); i++){
+    Stock stock = (Stock)result.get(i);
+    System.out.println(stock.getStockCode());
+}
+-----------------------------------------------------
+60.Is it possible to execute a native query? How to do that?
+
+ @NamedNativeQueries({
+    @NamedNativeQuery(
+        name = "getAllEmployees",
+        query = "SELECT id, firstName, lastName, email, department.id, department.name " +
+                    "FROM employee, department",
+                    resultClass=EmployeeEntity.class
+    ),
+    @NamedNativeQuery(
+        name = "getAllEmployeesByDeptId",
+        query = "SELECT id, firstName, lastName, email, department.id, department.name " +
+                    "FROM employee, department " + 
+                    "WHERE department.id = ?",
+                    resultClass=EmployeeEntity.class
+    )
+})
+ 
+public class EmployeeEntity implements Serializable
+{}
+
+Query query = session.getNamedQuery("getAllEmployees")
+    
+List result = query.list();
+for(int i=0; i<result.size(); i++){
+    Stock stock = (Stock)result.get(i);
+    System.out.println(stock.getStockCode());
+}
+-----------------------------------------
+61.What are benefits of Hibernate Criteria API?
+1.Restrictions with Criteria :
+You can use add() method available for Criteria object to add restriction for a criteria query.
+Criteria cr = session.createCriteria(Employee.class);
+cr.add(Restrictions.eq("salary", 2000));
+List results = cr.list();
+
+2.Pagination Using Criteria
+public Criteria setFirstResult(int firstResult)
+public Criteria setMaxResults(int maxResults)
+Using above two methods together, we can construct a paging component in our web or Swing application
+Criteria cr = session.createCriteria(Employee.class);
+cr.setFirstResult(1);
+cr.setMaxResults(10);
+List results = cr.list();
+
+3.Sorting the Results
+The Criteria API provides the org.hibernate.criterion.Order class to sort your result set in either ascending or descending order.
+
+// To sort records in descening order
+cr.addOrder(Order.desc("salary"));
+
+List results = cr.list();
+
+
+4.Projections & Aggregations.
+The Criteria API provides the org.hibernate.criterion.Projections class, which can be used to get average, maximum, or minimum of the property values.
+
+Criteria cr = session.createCriteria(Employee.class);
+// To get average of a property.
+cr.setProjection(Projections.avg("salary"));
+// To get maximum of a property.
+cr.setProjection(Projections.max("salary"));
+
+----------------------------------------------------------------
+62.What is the 1st level cache?
+First Level Cache: Hibernate first level cache is associated with the Session object. 
+Hibernate first level cache is enabled by default and there is no way to disable it.
+----------------------------------------------------------------
+63.How many cache levels do you know in Hibernate?
+Hibernate provides 3 types of caching.
+ 1.Session Cache
+ ->The session cache caches objects within the current session. It is enabled by default in Hibernate.
+ ->When we load an object for the first time from the database 
+ then the object will be loaded from the database and the loaded object will be stored in the cache memory maintained by that session object
+ ->If we load the same object once again, with in the same session, then the object will be loaded from the local cache memory not from the database
+ ->If we load the same object by opening other session then again the object will loads from the database and the loaded object will be stored in the
+ cache memory maintained by this new session
+ 2.Second Level Cache
+ -> The second level cache is responsible for caching objects across sessions.
+  ->When ever we are loading any object from the database,  
+  then hibernate verify whether that object is available in the local cache memory of that particular session [ means first level cache ], 
+  if not available then hibernate verify whether the object is available in global cache or factory cache [ second level cache ],
+  if not available then hibernate will hit the database and loads the object from there, 
+  and then first stores in the local cache of the session [ first level ] then in the global cache [ second level cache ].
+  ->When another session need to load the same object from the database,  then hibernate copies that object from global cache [ second level cache ] into the local cache of this new session
+  ->The ‘second-level’ cache exists as long as the session factory is alive
+  Second level cache in the hibernate is of  from 4 vendors
+  Easy Hibernate [EHCache] Cache from hibernate framework
+Open Symphony [OS] cache from Open Symphony
+SwarmCache
+TreeCache from JBoss
+
+To enable second level cache in the hibernate, then the following 3 changes are required
+1.<property name="hibernate.cache.provider_class">
+org.hibernate.cache.EhCacheProvider
+</property>
+<property name="cache.use_second_level_cache">true</property>
+
+2.Configure cache elementfor a class in hibernate mapping file…
+<cache usage="read-only" />
+
+3.create xml file called ehcache.xml and store in at class path location [ no confusions, i mean in the place where you have mapping and configuration XML’s ] in web application
+
+
+<!-- Disable the second-level cache -->  
+<property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property> 
+
+
+
+Cache Strategy using with Annotation as some changes made to the Model class also.
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
+@Entity
+@Table(name="STUDENT")
+public class Student implements Serializable 
+{
+  ....
+  
+
+
+
+Lets take an example, we have 2 pojo classes in our application like Student, Employee.
+
+If we load student object from the database, then as its the first time hibernate will hits the database and fetch this student object data
+ and stores in the session1 cache memory [ First level cache ], then in the global cache [ second level cache ] 
+ provided if we write <cache usage=”read-only” /> in the student mapping file
+I mean hibernate will stores in the local session memory by default, but it only stores in the global cache [ second level cache ]
+ only if we write <cache usage=”read-only” /> 
+ in the student mapping file, if not so hibernate wont stores in the global cache
+Now take another session like session 2 for example,
+ if session 2 also load the student object then hibernate will loads from the global cache [ second level cache ] 
+ as student object is available at global 
+ [Actually when ever we want to load any object hibernate first will checks at local, 
+ then global then database right hope you remembered this ], now if session 3 modify that student object then hibernate will thorows an error because we have written <cache usage=”read-only” /> in student mapping file
+We can avoid this by writing <cache usage=”read-write” />
+
+----------------------------------------------------------------  
+64.What is a difference between 1st and 2nd levels of cache?
+
+First Level Cache														Second Level cache
+------------------------------------------------------------------------------------------------------------------------------------------------
+1. first level cache is maintained at the Session level		   		1.second level cache is maintained at the SessionFactory level.
+2.The data stored in the first level cache is accessible to 		2.the second level cache is accessible to all
+the only Session who maintains it, 
+3.The first level cache is by default enabled 						3. the second level cache is by default disabled.
+
+
+A couple of things to know about Hibernate's first level cache:
+
+1) You can use the Session.evict() to remove the loaded entity from the first level cache, can use the refresh() method to refresh the cache, and can use the clear() method to remove all entities in cache.
+
+2) You cannot disable the first level cache, it always enabled.
+
+3) Hibernate entities or database rows remain in cache only until Session is open, once Session is closed, all associated cached data is lost.
+----------------------------------------------------------------  
+65.What types of shared cache mode do you know?
+To configure shared cache mode, hibernate provides javax.persistence.sharedCache.mode and it allows four values.
+
+ENABLE_SELECTIVE: Entities will not be cached until entity will be annotated by cacheable.
+DISABLE_SELECTIVE : Those entities are cached which are explicitly not annotated with cacheable.
+ALL : Every entities will be cached.
+NONE: No entity will be cached.
