@@ -1,0 +1,213 @@
+Java Concepts
+--------------------
+1.FailFast vs fail safe collections 				
+2.Factory and Abstract factory design Pattern
+3.JDK v JRE v JVM
+4.Aggregation v Composition v Association
+5.Builder Design Pattern
+6.Abstract class and interfaces
+7. Java is pass by value /reference
+8.JVM architecture
+9.Runnable v Callable
+10.Executor Framework
+11.Pool types
+12.ThreadLocal
+13.Future v completable future
+14.what are disdavantages of future ?
+15.String is immuatble why ?
+16.string.intern() ?
+17.why key in hashmap is Immutable object?
+18.Immutable classs ? and how to design it ?and its advantages ?
+19.what happens if we use mutable objcet in hashmap?
+20.SOLID principles of java
+21.Singleton design pattern > and ways to break it ?
+22.Overriding and Overloading in java?
+23.Autoboxing ?
+24.HashMap internal working ?
+25.Class Def Not found Errror vs ClassNotfoundException?
+26.Exception hierarchy ?
+27.throw vs throws?
+28. try , catch finally ?
+29.try-with-resource?
+30.Inheritance in Exception handling?
+31.when finally wont be executed ?
+32.why concurrent modifictaion exception ocuurs?
+33.Threads vs process
+34.ways to created thread and which is better approach ?
+35.What is a thread schedular 
+36.Can we overload start() ?
+37.overriding run is possible ? 
+38.Thread states ?
+39.what happens if thread.start() is called multiple time ?
+40.Thread Priorities?
+41.Yield v join v sleep ? 
+42.what is synchronization ?
+43.Locking concept ?
+44.what is static synchronized block?
+45.What is race condition ?
+46.what is deadlock? how  to detect deadlock? and how will you prevent it ?
+47.why multiple inheritance is not supported?
+48.what are default and static methods ? can we override it ?
+49.use of wrapper classes ?
+50.what are checked and unchecked exception ?
+51.What are basic OOPS principles?
+52.Why was Concurrent Hashmap introduced? How is it different from Hashmap?
+53.what is the diffrence between heap and a stack ?
+54.can we declare constructor as private ?
+55.Can we make constructor as final ?
+56.What is a transient keyword ?
+57.Method overriding concepts
+58.where static  block gets stored?
+59.explain public static void main();
+60.can we overload static member in overloading
+Can we overload methods that differ only by static keyword
+61.What happens if exception is thrown from finally block?
+62.What happens when u call return statement in try catch 
+63.What is externalization?
+64.Serilaization v/s Externalization?
+65.purpose of serialversion id?
+66.what is GC ?
+67.final v finally v finalize?
+68.wait and notify ,notiifyall?
+69.Difference b/w comparator and comparable
+70.equals and hashcode contract ?
+71.ArrayList and its benifits
+72.HashMap v Hashtable v SynchronizedHashMap v concurrentHashMap
+73.Collection vs Collections
+74.List vs Set
+75.HashSet vs TreeSet (Implemented  using,order , Null,Implements , Comparision)
+76.HashMap vs TreeMap (order , null ,implements ,comparison, datastructure)
+77.Iterator Vs ListIterator vs Enumerator
+78.How to synhronize Map,ListSet ?
+79.How to make collection readonly ?
+80.Ways to create object?
+81.What is a weakhashmap , how different is it from hashmap?
+82.What is string constact pool?
+83.USe of generics in java?
+84.What is Copyonwrite arraylist
+85.Error v Exception?
+86.try with finally what happens?
+87.What is Collection in java ?
+88.How to collection as final?
+89.how to create fixed size arrayList ?
+
+
+
+
+
+Java8 concepts
+-----------------
+1.Parallel stream v stream
+2.why lambda expresiiion is used?
+3.What are functional interfaces?
+4.How can you override the default methods from a functional interface?
+5.What are the new features of Java 8?
+6.list of empNames , 	find unique names and duplicate names 
+
+
+Hibernate
+----------------------------------
+
+
+
+spring boot
+----------------
+1.Advantages of spring boot over spring ?
+2.What is autoconfiguration?
+3.How spring boot works ?
+4.Explain @SpringBootApplication?
+5.Explain @ComponentScan?
+6.What are spring boot profiles ?
+7.Why do write Junit testcases ?
+8.differernce between @REstController v @Controller
+9.What is @Repository vs @Controller vs @Service ?
+10.PUT vs POST  vs PATCH?
+11.How Autoconfiguration works ?
+12.why do we need main() in spring boot application?
+13.JpaRepository v crudrepository v pagingandsorting repository?
+14.Explain the concept of Dependency Injection.
+15.What are different types of Dependency Injection?
+16,How can you configure Spring in your application?
+17.What are different bean scopes in Spring?
+18.What is default scope of bean in Spring?
+19,What do you mean by bean autowiring in Spring?
+20.@Qualifier annotation
+21.Explain Spring MVC Architecture.
+22.@PathVariable ,@RequestParam ,@Component,@Bean,@Configuration,@ComponentScan 
+23.what is spring boot maven plugin ?
+24.what is spring boot starter?
+25.Filters v Interceptor
+26.what is an api gateway ?
+27.different implementations of api gateway 
+28.how spring security works ?
+29.how jwt works ?
+30.what is spring boot starter parent ?
+31.what is spring boot maven plugiun?
+
+32.How to disable a specific auto-configuration
+33. What do Dev Tools in Spring boot mean
+34.What Is Spring Cloud?
+
+
+
+Microservices
+------------------
+1.SAGA design pattern
+	--Event based
+	--Orchestration
+2.Scaling in microservices?
+3.
+What are the different Microservices Design Patterns?
+The different Microservices Design Patterns are -
+
+Aggregator Microservice Design Pattern
+API Gateway Design Pattern
+Chain of Responsibility Design Pattern
+Branch Microservice Design Pattern
+Circuit Breaker Design Pattern
+Asynchronous Messaging Design Pattern
+4.
+
+
+Programming Questions :
+----------------------------
+class Employee
+{
+    int id;
+     
+    String name;
+     
+    int age;
+     
+    String gender;
+     
+    String department;
+     
+    int yearOfJoining;
+     
+    double salary;
+	
+}
+
+empList.add(new Employee(1, "Mary", 32, "Female", "HR", 2011, 25000.0));
+empList.add(new Employee(2, "Chris", 25, "Male", "Sales And Marketing", 2015, 13500.0));
+empList.add(new Employee(3, "Steve", 29, "Male", "Infrastructure", 2012, 18000.0));
+empList.add(new Employee(4, "Robert", 28, "Male", "Product Development", 2014, 32500.0));
+empList.add(new Employee(5, "Eve", 27, "Female", "HR", 2013, 22700.0));
+empList.add(new Employee(6, "Mark", 43, "Male", "Security And Transport", 2016, 10500.0));
+
+--------
+public class MainClass
+{
+    void method(int ... a)
+    {
+        System.out.println(1);
+    }
+ 
+    void method(int[] a)
+    {
+        System.out.println(2);
+    }
+}
+----------------------
+
