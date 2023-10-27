@@ -1,0 +1,11 @@
+1.Difference between @controller and @RestController
+2.What are the Rest api best practices ?
+3.What is the difference between Monolith and Microservices architecture?
+4.How Spring boot application boot straps ?
+5.How do you manage microservices ?
+6.How service registartion and discovery works ?
+7.What is server side and client side loadbalancing ?
+8.How to handle failures in microservice ?
+9.Explain Circuit breaker ? and different states in circuit breaker explain?
+10.How will you detect a slower microservice which is causing a performance issue ?
+11.How to track exception in microservices?
